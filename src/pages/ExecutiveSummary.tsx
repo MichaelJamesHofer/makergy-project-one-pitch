@@ -47,8 +47,8 @@ const ExecutiveSummary = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h1 className="text-5xl font-bold text-white mb-4">Project Summary</h1>
-        <p className="text-xl text-stone-300 mb-12">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Project Summary</h1>
+        <p className="text-lg sm:text-xl text-stone-300 mb-12">
           Makergy Project One - design-forward luxury residence with disciplined build economics
         </p>
 

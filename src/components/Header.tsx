@@ -45,12 +45,12 @@ const Header = () => {
   const { x, width } = getIndicatorProps();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-stone-950/90 backdrop-blur supports-[backdrop-filter]:bg-stone-950/70 border-stone-800">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75 border-border">
       <div className="container min-h-[5rem]">
         <div className="flex h-full min-h-[5rem] items-center justify-between px-4 md:px-6">
           {/* Logo / Title */}
           <div className="flex items-center flex-shrink-0">
-            <h1 className="text-sm sm:text-base md:text-xl font-bold text-white">
+            <h1 className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-[0.3em] text-foreground">
               <span className="hidden sm:inline">Makergy Project One</span>
               <span className="sm:hidden">Project One</span>
             </h1>
@@ -72,7 +72,7 @@ const Header = () => {
                   >
                     <Link
                       to={item.path}
-                      className="relative text-sm font-medium transition-colors duration-150 px-4 py-2 whitespace-nowrap text-stone-300 hover:text-white inline-block"
+                      className="relative text-xs font-medium uppercase tracking-widest transition-colors duration-150 px-4 py-2 whitespace-nowrap text-foreground/70 hover:text-foreground inline-block"
                       style={{
                         color: activeIndex === index ? '#fff' : undefined
                       }}
@@ -106,7 +106,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-stone-300 hover:text-white transition-colors flex-shrink-0"
+            className="md:hidden p-2 text-foreground/70 hover:text-foreground transition-colors flex-shrink-0"
           >
             {mobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
           </button>
@@ -119,7 +119,7 @@ const Header = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden bg-stone-950 border-t border-stone-800"
+          className="md:hidden bg-background border-t border-border"
         >
           <div className="container py-4">
             <nav className="flex flex-col space-y-2">
@@ -130,8 +130,8 @@ const Header = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                     location.pathname === item.path
-                      ? 'bg-amber-900/20 text-white'
-                      : 'text-stone-300 hover:text-white hover:bg-stone-900/60'
+                      ? 'bg-accent/15 text-foreground'
+                      : 'text-foreground/70 hover:text-foreground hover:bg-card/60'
                   }`}
                 >
                   {item.label}

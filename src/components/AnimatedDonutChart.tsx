@@ -168,7 +168,7 @@ const AnimatedDonutChart = ({
     segments.append("path")
       .attr("d", arc)
       .attr("fill", d => d.data.color)
-      .attr("stroke", "#0f172a")
+      .attr("stroke", "#1c1b1a")
       .attr("stroke-width", 2)
       .style("filter", "url(#drop-shadow)")
       .style("cursor", "pointer")

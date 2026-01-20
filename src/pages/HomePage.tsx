@@ -51,7 +51,7 @@ const HomePage = () => {
         transition={{ duration: 0.3 }}
         className="text-center mb-14"
       >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 bg-gradient-to-r from-amber-200 via-amber-300 to-orange-400 bg-clip-text text-transparent">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
           Makergy Project One
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-stone-300 max-w-3xl mx-auto px-4">

@@ -189,6 +189,8 @@ const ProductsServices = () => {
     }
   ];
 
+  const totalRooms = roomHighlights.length;
+
   const valueEngineering = [
     'Floor-to-ceiling glass ($700 more per opening) weighed against ROI',
     'Exotic stone slabs evaluated as ROI-sensitive upgrade',
@@ -202,8 +204,8 @@ const ProductsServices = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-5xl font-bold text-white mb-4">Design & Scope</h1>
-        <p className="text-xl text-stone-300 mb-12">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Design & Scope</h1>
+        <p className="text-lg sm:text-xl text-stone-300 mb-12">
           Palermo concept with disciplined scope across shell, finishes, and technology
         </p>
 
@@ -349,19 +351,26 @@ const ProductsServices = () => {
         >
           <h3 className="text-2xl font-semibold text-white mb-6">Room-by-Room Priorities</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {roomHighlights.map((room) => (
-              <div key={room.room} className="bg-stone-900/60 border border-stone-700/60 rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-white mb-3">{room.room}</h4>
-                <ul className="space-y-2">
-                  {room.items.map((item) => (
-                    <li key={item} className="flex items-start text-sm text-stone-200">
-                      <span className="text-amber-300 mr-2">•</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {roomHighlights.map((room, idx) => {
+              const isLastOdd = totalRooms % 2 === 1 && idx === totalRooms - 1;
+
+              return (
+                <div
+                  key={room.room}
+                  className={`bg-stone-900/60 border border-stone-700/60 rounded-lg p-6 ${isLastOdd ? 'md:col-span-2 md:max-w-lg md:mx-auto' : ''}`}
+                >
+                  <h4 className="text-lg font-semibold text-white mb-3">{room.room}</h4>
+                  <ul className="space-y-2">
+                    {room.items.map((item) => (
+                      <li key={item} className="flex items-start text-sm text-stone-200">
+                        <span className="text-amber-300 mr-2">•</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
 

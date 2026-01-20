@@ -52,8 +52,8 @@ const FundingRequest = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h1 className="text-5xl font-bold text-white mb-4 text-center">Investment Terms</h1>
-        <p className="text-xl text-stone-300 mb-6 text-center">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 text-center">Investment Terms</h1>
+        <p className="text-lg sm:text-xl text-stone-300 mb-6 text-center">
           All-cash equity structure supporting a $10M luxury exit
         </p>
         <p className="text-sm text-stone-400 mb-12 text-center">

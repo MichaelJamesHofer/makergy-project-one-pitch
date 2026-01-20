@@ -234,11 +234,11 @@ const FinancialProjections = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-5xl font-bold text-white mb-4">Budget & Returns</h1>
-        <p className="text-xl text-stone-300 mb-4">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Budget & Returns</h1>
+        <p className="text-lg sm:text-xl text-stone-300 mb-4">
           Targeting a $10M exit with a $5.0-6.0M build plan and a $7.0-7.5M all-in budget (including a $2M lot)
         </p>
-        <p className="text-lg text-stone-400 mb-12">
+        <p className="text-base sm:text-lg text-stone-400 mb-12">
           All-cash equity, no bank debt, and a 20% preferred return before the 50/50 backend split.
         </p>
 
@@ -397,12 +397,19 @@ const FinancialProjections = () => {
         >
           <h3 className="text-2xl font-semibold text-white mb-6">Underwriting Items To Lock</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto">
-            {underwritingNeeds.map((item) => (
-              <div key={item} className="flex items-start gap-3 bg-stone-900/60 border border-stone-700/60 rounded-lg p-4 w-full max-w-lg">
-                <span className="text-amber-300">•</span>
-                <p className="text-sm text-stone-300">{item}</p>
-              </div>
-            ))}
+            {underwritingNeeds.map((item, idx) => {
+              const isLastOdd = underwritingNeeds.length % 2 === 1 && idx === underwritingNeeds.length - 1;
+
+              return (
+                <div
+                  key={item}
+                  className={`flex items-start gap-3 bg-stone-900/60 border border-stone-700/60 rounded-lg p-4 w-full max-w-lg ${isLastOdd ? 'md:col-span-2 md:max-w-lg md:mx-auto' : ''}`}
+                >
+                  <span className="text-amber-300">•</span>
+                  <p className="text-sm text-stone-300">{item}</p>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
 
