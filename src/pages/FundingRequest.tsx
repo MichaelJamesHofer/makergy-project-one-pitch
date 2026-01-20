@@ -4,10 +4,11 @@ import { IoRocketOutline } from 'react-icons/io5';
 import AnimatedDonutChart from '../components/AnimatedDonutChart';
 
 const FundingRequest = () => {
+  // Force rebuild - updated pricing values
   const equityUse = [
-    { category: 'Land acquisition', amount: 2_000_000, color: '#c9a873' },
+    { category: 'Land acquisition', amount: 2_500_000, color: '#c9a873' },
     { category: 'Construction + finishes', amount: 5_000_000, color: '#8d6b4f' },
-    { category: 'Soft costs + contingency', amount: 500_000, color: '#a9825a' },
+    { category: 'Soft costs + contingency', amount: 0, color: '#a9825a' },
   ];
 
   const totalEquity = equityUse.reduce((sum, item) => sum + item.amount, 0);
@@ -22,11 +23,8 @@ const FundingRequest = () => {
     'All-cash equity, no bank debt or draw risk',
     'Project One SPV owns land and project capital',
     'Return of capital + 20% preferred return target',
-    '50/50 backend split after pref hurdle',
-    'Development fee: 4% of total project costs (paid monthly)',
-    'GC fee: 6% of build cost if Makergy self-performs',
-    'Makergy acts as manager and design-build contractor',
-    'Investor veto rights on major decisions (sale, debt, replacement)'
+    '100% residual profit to Makergy after pref hurdle',
+    'Makergy acts as manager and design-build contractor'
   ];
 
   const milestones = [
@@ -41,7 +39,7 @@ const FundingRequest = () => {
   const dealHighlights = [
     { metric: 'Target Sale', value: '$10M', timeline: 'Premium exit' },
     { metric: 'Equity Structure', value: 'All-cash', timeline: 'No bank debt' },
-    { metric: 'Promote Split', value: '50/50', timeline: 'After capital + pref' },
+    { metric: 'Residual Profit', value: '100% Makergy', timeline: 'After capital + pref' },
     { metric: 'Risk Isolation', value: 'SPV', timeline: 'Liability firewall' },
   ];
 
@@ -62,9 +60,9 @@ const FundingRequest = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {[
-            { icon: <FiDollarSign className="w-12 h-12" />, value: '$5.0-6.0M', label: 'Build Target' },
-            { icon: <FiTarget className="w-12 h-12" />, value: '$7.0-7.5M', label: 'All-in Target' },
-            { icon: <FiMapPin className="w-12 h-12" />, value: '$2M', label: 'Lot Target' },
+            { icon: <FiDollarSign className="w-12 h-12" />, value: '$5M', label: 'Build Target' },
+            { icon: <FiTarget className="w-12 h-12" />, value: '$7.5M', label: 'All-in Target' },
+            { icon: <FiMapPin className="w-12 h-12" />, value: '$2.5M', label: 'Lot Target' },
             { icon: <IoRocketOutline className="w-12 h-12" />, value: '$10M', label: 'Sale Target' },
           ].map((card, idx) => (
             <motion.div
@@ -96,7 +94,7 @@ const FundingRequest = () => {
             className="bg-stone-900/80 border border-stone-800 rounded-xl p-8"
           >
             <h3 className="text-2xl font-semibold text-white mb-2 text-center">Use of Equity (Illustrative)</h3>
-            <p className="text-xs text-stone-500 text-center mb-6">Targets aligned to the $7.5M all-in cap.</p>
+            <p className="text-xs text-stone-500 text-center mb-6">Targets aligned to the $7.5M all-in total.</p>
             <div className="flex justify-center items-center">
               <AnimatedDonutChart
                 data={equityUse.map(item => ({

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiDollarSign, FiTrendingUp, FiMapPin, FiShield } from 'react-icons/fi';
+import { FiDollarSign, FiTrendingUp, FiMapPin, FiShield, FiHome } from 'react-icons/fi';
 import AnimatedDonutChart from '../components/AnimatedDonutChart';
 
 const FinancialProjections = () => {
@@ -9,12 +9,12 @@ const FinancialProjections = () => {
   ];
 
   const usesBreakdown = [
-    { item: 'Land acquisition', value: '$2.0M', note: 'Target lot price' },
-    { item: 'Build (detailed below)', value: '$5.5M', note: 'Includes soft costs, garage, systems, furnishings, and landscape' },
+    { item: 'Land acquisition', value: '$2.5M', note: 'Target lot price' },
+    { item: 'Build (detailed below)', value: '$5M', note: 'Includes soft costs, garage, systems, furnishings, and landscape' },
     { item: 'All-in total', value: '$7.5M', note: 'Aligned to target cap' },
   ];
 
-  const buildTargetTotal = 5_500_000;
+  const buildTargetTotal = 5_000_000;
   const salePrice = 10_000_000;
   const sellingCosts = 200_000;
   const netProceeds = salePrice - sellingCosts;
@@ -23,8 +23,8 @@ const FinancialProjections = () => {
   const preferredReturn = equityCapital * preferredReturnRate;
   const remainingAfterCapital = netProceeds - equityCapital;
   const remainingAfterPref = remainingAfterCapital - preferredReturn;
-  const investorSplit = remainingAfterPref * 0.5;
-  const makergySplit = remainingAfterPref * 0.5;
+  const investorSplit = 0;
+  const makergySplit = remainingAfterPref;
   const developmentFee = equityCapital * 0.04;
   const gcFee = buildTargetTotal * 0.06;
   const investorTotal = equityCapital + preferredReturn + investorSplit;
@@ -39,145 +39,145 @@ const FinancialProjections = () => {
     }).format(value);
 
   const buildCategories = [
-    { name: 'Precon + permits', amount: 260000, color: '#c9a873' },
-    { name: 'Site + civil', amount: 445000, color: '#b18d66' },
-    { name: 'Structure + envelope', amount: 1440000, color: '#8d6b4f' },
-    { name: 'MEP systems', amount: 850000, color: '#a9825a' },
-    { name: 'Interior finishes', amount: 1150000, color: '#d2b07f' },
-    { name: 'Technology + vertical', amount: 340000, color: '#b99b7c' },
-    { name: 'Garage + mail room', amount: 625000, color: '#9a7a60' },
-    { name: 'Landscape + outdoor', amount: 250000, color: '#c4a57a' },
-    { name: 'Furnishings + staging', amount: 140000, color: '#d9c2a0' },
+    { name: 'Precon + permits', amount: 236364, color: '#c9a873' },
+    { name: 'Site + civil', amount: 404545, color: '#b18d66' },
+    { name: 'Structure + envelope', amount: 1309091, color: '#8d6b4f' },
+    { name: 'MEP systems', amount: 772727, color: '#a9825a' },
+    { name: 'Interior finishes', amount: 1045455, color: '#d2b07f' },
+    { name: 'Technology + vertical', amount: 309091, color: '#b99b7c' },
+    { name: 'Garage + mail room', amount: 568182, color: '#9a7a60' },
+    { name: 'Landscape + outdoor', amount: 227273, color: '#c4a57a' },
+    { name: 'Furnishings + staging', amount: 127273, color: '#d9c2a0' },
   ];
 
   const roomBudgets = [
     {
       room: 'Whole House + Site (Shared Infrastructure)',
-      total: 2_995_000,
+      total: 2_722_727,
       items: [
-        { label: 'Precon + permits + engineering', amount: 260000 },
-        { label: 'Excavation, retaining, drainage, waterproofing', amount: 445000 },
-        { label: 'Framing + structural beams', amount: 500000 },
-        { label: 'Exterior envelope (stone, stucco, cladding)', amount: 260000 },
-        { label: 'Roofing + waterproofing', amount: 180000 },
-        { label: 'Glazing package + exterior doors', amount: 320000 },
-        { label: 'Insulation + drywall level 4', amount: 210000 },
-        { label: 'MEP rough-in + equipment', amount: 820000 },
+        { label: 'Precon + permits + engineering', amount: 236364 },
+        { label: 'Excavation, retaining, drainage, waterproofing', amount: 404545 },
+        { label: 'Framing + structural beams', amount: 454545 },
+        { label: 'Exterior envelope (stone, stucco, cladding)', amount: 236364 },
+        { label: 'Roofing + waterproofing', amount: 163636 },
+        { label: 'Glazing package + exterior doors', amount: 290909 },
+        { label: 'Insulation + drywall level 4', amount: 190909 },
+        { label: 'MEP rough-in + equipment', amount: 745455 },
       ],
     },
     {
       room: 'Entry + Foyer',
-      total: 90_000,
+      total: 81_818,
       items: [
-        { label: 'Custom entry door', amount: 9000 },
-        { label: 'Wood veneer paneling', amount: 40000 },
-        { label: 'Wallcovering + art lighting', amount: 15000 },
-        { label: 'Heated stone flooring', amount: 18000 },
-        { label: 'Bench + concealed storage', amount: 8000 },
+        { label: 'Custom entry door', amount: 8182 },
+        { label: 'Wood veneer paneling', amount: 36364 },
+        { label: 'Wallcovering + art lighting', amount: 13636 },
+        { label: 'Heated stone flooring', amount: 16364 },
+        { label: 'Bench + concealed storage', amount: 7273 },
       ],
     },
     {
       room: 'Living + Dining',
-      total: 200_000,
+      total: 181_818,
       items: [
-        { label: 'Fireplace + leather wrap', amount: 52000 },
-        { label: 'Wood ceiling detail', amount: 24000 },
-        { label: 'Flooring allocation', amount: 32000 },
-        { label: 'Lighting layers', amount: 18000 },
-        { label: 'Built-ins + media concealment', amount: 30000 },
-        { label: 'Acoustic drapery + treatments', amount: 20000 },
-        { label: 'Trim + doors + paint allocation', amount: 24000 },
+        { label: 'Fireplace + leather wrap', amount: 47273 },
+        { label: 'Wood ceiling detail', amount: 21818 },
+        { label: 'Flooring allocation', amount: 29091 },
+        { label: 'Lighting layers', amount: 16364 },
+        { label: 'Built-ins + media concealment', amount: 27273 },
+        { label: 'Acoustic drapery + treatments', amount: 18182 },
+        { label: 'Trim + doors + paint allocation', amount: 21818 },
       ],
     },
     {
       room: 'Kitchen + Pantry',
-      total: 450_000,
+      total: 409_091,
       items: [
-        { label: 'Cabinetry + pantry millwork', amount: 240000 },
-        { label: 'Appliances', amount: 85000 },
-        { label: 'Countertops', amount: 80000 },
-        { label: 'Sink + filtration + fixtures', amount: 20000 },
-        { label: 'Lighting + custom hardware', amount: 15000 },
-        { label: 'Trim + paint allocation', amount: 10000 },
+        { label: 'Cabinetry + pantry millwork', amount: 218182 },
+        { label: 'Appliances', amount: 77273 },
+        { label: 'Countertops', amount: 72727 },
+        { label: 'Sink + filtration + fixtures', amount: 18182 },
+        { label: 'Lighting + custom hardware', amount: 13636 },
+        { label: 'Trim + paint allocation', amount: 9091 },
       ],
     },
     {
       room: 'Primary Suite',
-      total: 190_000,
+      total: 172_727,
       items: [
-        { label: 'Primary closet upgrade', amount: 50000 },
-        { label: 'Bath cabinetry allocation', amount: 20000 },
-        { label: 'Tadelakt shower finish', amount: 15000 },
-        { label: 'Heated shower bench', amount: 4000 },
-        { label: 'Stone/tile package', amount: 40000 },
-        { label: 'Plumbing fixtures allocation', amount: 30000 },
-        { label: 'Flooring + paint allocation', amount: 20000 },
-        { label: 'Shower glass + lighting', amount: 11000 },
+        { label: 'Primary closet upgrade', amount: 45455 },
+        { label: 'Bath cabinetry allocation', amount: 18182 },
+        { label: 'Tadelakt shower finish', amount: 13636 },
+        { label: 'Heated shower bench', amount: 3636 },
+        { label: 'Stone/tile package', amount: 36364 },
+        { label: 'Plumbing fixtures allocation', amount: 27273 },
+        { label: 'Flooring + paint allocation', amount: 18182 },
+        { label: 'Shower glass + lighting', amount: 10000 },
       ],
     },
     {
       room: 'Guest Suites',
-      total: 120_000,
+      total: 109_091,
       items: [
-        { label: 'Bath tile + fixtures allocation', amount: 50000 },
-        { label: 'Bath cabinetry allocation', amount: 20000 },
-        { label: 'Closet systems', amount: 5000 },
-        { label: 'Carpet + pad', amount: 6000 },
-        { label: 'Trim + paint allocation', amount: 20000 },
-        { label: 'Shower glass allocation', amount: 5000 },
-        { label: 'Casework + lighting', amount: 14000 },
+        { label: 'Bath tile + fixtures allocation', amount: 45455 },
+        { label: 'Bath cabinetry allocation', amount: 18182 },
+        { label: 'Closet systems', amount: 4545 },
+        { label: 'Carpet + pad', amount: 5455 },
+        { label: 'Trim + paint allocation', amount: 18182 },
+        { label: 'Shower glass allocation', amount: 4545 },
+        { label: 'Casework + lighting', amount: 12727 },
       ],
     },
     {
       room: 'Library Lounge',
-      total: 100_000,
+      total: 90_909,
       items: [
-        { label: 'Custom millwork + shelving', amount: 30000 },
-        { label: 'Flooring allocation', amount: 15000 },
-        { label: 'Lighting + controls', amount: 10000 },
-        { label: 'Wallcovering + finishes', amount: 15000 },
-        { label: 'Acoustic treatments + seating', amount: 20000 },
-        { label: 'Trim + paint allocation', amount: 10000 },
+        { label: 'Custom millwork + shelving', amount: 27273 },
+        { label: 'Flooring allocation', amount: 13636 },
+        { label: 'Lighting + controls', amount: 9091 },
+        { label: 'Wallcovering + finishes', amount: 13636 },
+        { label: 'Acoustic treatments + seating', amount: 18182 },
+        { label: 'Trim + paint allocation', amount: 9091 },
       ],
     },
     {
       room: 'Outdoor Living + Landscape',
-      total: 250_000,
+      total: 227_273,
       items: [
-        { label: 'Stone/paver patios', amount: 80000 },
-        { label: 'Outdoor lighting', amount: 30000 },
-        { label: 'Overhangs + exterior carpentry', amount: 40000 },
-        { label: 'Xeriscape planting', amount: 60000 },
-        { label: 'Water feature allowance', amount: 40000 },
+        { label: 'Stone/paver patios', amount: 72727 },
+        { label: 'Outdoor lighting', amount: 27273 },
+        { label: 'Overhangs + exterior carpentry', amount: 36364 },
+        { label: 'Xeriscape planting', amount: 54545 },
+        { label: 'Water feature allowance', amount: 36364 },
       ],
     },
     {
       room: 'Garage + Mail Room',
-      total: 625_000,
+      total: 568_182,
       items: [
-        { label: 'Slab + structure shell', amount: 300000 },
-        { label: 'Walls, doors, and exterior finishes', amount: 200000 },
-        { label: 'Rough-ins + storage build-out', amount: 125000 },
+        { label: 'Slab + structure shell', amount: 272727 },
+        { label: 'Walls, doors, and exterior finishes', amount: 181818 },
+        { label: 'Rough-ins + storage build-out', amount: 113636 },
       ],
     },
     {
       room: 'Technology + Vertical Transport',
-      total: 340_000,
+      total: 309_091,
       items: [
-        { label: 'Hidden AV + speakers', amount: 250000 },
-        { label: 'Motorized blinds', amount: 60000 },
-        { label: 'Elevator', amount: 30000 },
+        { label: 'Hidden AV + speakers', amount: 227273 },
+        { label: 'Motorized blinds', amount: 54545 },
+        { label: 'Elevator', amount: 27273 },
       ],
     },
     {
       room: 'Furnishings + Staging',
-      total: 140_000,
+      total: 127_273,
       items: [
-        { label: 'Living + dining', amount: 60000 },
-        { label: 'Primary suite', amount: 30000 },
-        { label: 'Guest suites', amount: 20000 },
-        { label: 'Library lounge', amount: 15000 },
-        { label: 'Outdoor living', amount: 15000 },
+        { label: 'Living + dining', amount: 54545 },
+        { label: 'Primary suite', amount: 27273 },
+        { label: 'Guest suites', amount: 18182 },
+        { label: 'Library lounge', amount: 13636 },
+        { label: 'Outdoor living', amount: 13636 },
       ],
     },
   ];
@@ -216,7 +216,7 @@ const FinancialProjections = () => {
       tone: 'text-amber-200'
     },
     {
-      step: 'Residual profit available for split',
+      step: 'Residual profit to Makergy (100%)',
       amount: remainingAfterPref,
       remaining: 0,
       tone: 'text-stone-200'
@@ -224,8 +224,7 @@ const FinancialProjections = () => {
   ];
 
   const splitSummary = [
-    { label: 'Investor residual share (50%)', amount: investorSplit },
-    { label: 'Makergy residual share (50%)', amount: makergySplit },
+    { label: 'Makergy residual share (100%)', amount: makergySplit },
   ];
 
   return (
@@ -236,18 +235,18 @@ const FinancialProjections = () => {
       >
         <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Budget & Returns</h1>
         <p className="text-lg sm:text-xl text-stone-300 mb-4">
-          Targeting a $10M exit with a $5.0-6.0M build plan and a $7.0-7.5M all-in budget (including a $2M lot)
+          Targeting a $10M exit with a $5M build plan and a $7.5M all-in budget (including a $2.5M lot)
         </p>
         <p className="text-base sm:text-lg text-stone-400 mb-12">
-          All-cash equity, no bank debt, and a 20% preferred return before the 50/50 backend split.
+          All-cash equity, no bank debt, and a 20% preferred return with 100% residual profit to Makergy.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           {[
             { label: 'Target Sale Price', value: '$10M', icon: <FiTrendingUp /> },
-            { label: 'Build Target', value: '$5.0-6.0M', icon: <FiDollarSign /> },
-            { label: 'All-in Target', value: '$7.0-7.5M', icon: <FiMapPin /> },
-            { label: 'Capital Structure', value: 'All-cash', icon: <FiShield /> },
+            { label: 'All-in Target', value: '$7.5M', icon: <FiMapPin /> },
+            { label: 'Build Target', value: '$5M', icon: <FiDollarSign /> },
+            { label: 'Lot Target', value: '$2.5M', icon: <FiHome /> },
           ].map((metric, idx) => (
             <motion.div
               key={idx}
@@ -311,7 +310,7 @@ const FinancialProjections = () => {
         >
           <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
             <div>
-              <h3 className="text-2xl font-semibold text-white">Build Cost Breakdown ($5.5M Target)</h3>
+              <h3 className="text-2xl font-semibold text-white">Build Cost Breakdown ($5M Target)</h3>
               <p className="text-sm text-stone-400">Complete build cost allocation across categories.</p>
             </div>
             <p className="text-sm text-amber-300 font-semibold">Total: {formatUsd(buildTargetTotal)}</p>
@@ -357,7 +356,7 @@ const FinancialProjections = () => {
         >
           <h3 className="text-2xl font-semibold text-white mb-4">Room-by-Room Allocation</h3>
           <p className="text-sm text-stone-400 mb-6">
-            Interactive breakdown of room allocations that sum to the $5.5M build target.
+            Interactive breakdown of room allocations that sum to the $5M build target.
           </p>
           <div className="space-y-4">
             {roomBudgets.map((room, idx) => (
@@ -423,7 +422,7 @@ const FinancialProjections = () => {
             <div>
               <h3 className="text-2xl font-semibold text-white">Return Structure (Base Case $10M Sale)</h3>
               <p className="text-sm text-stone-400">
-                Assumes $7.5M equity, $200K capped selling costs, and a 20% preferred return before the 50/50 split.
+                Assumes $7.5M equity, $200K capped selling costs, and a 20% preferred return with 100% residual profit to Makergy.
               </p>
             </div>
             <div className="text-right">
@@ -453,10 +452,10 @@ const FinancialProjections = () => {
             </table>
           </div>
           <p className="text-xs text-stone-500 mb-6">
-            Preferred return is calculated as 20% of $7.5M = $1.5M. Residual profit after pref is split 50/50.
+            Preferred return is calculated as 20% of $7.5M = $1.5M. Residual profit after pref goes 100% to Makergy.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 justify-items-center">
+          <div className="grid grid-cols-1 gap-6 mb-8 justify-items-center">
             {splitSummary.map((row) => (
               <div key={row.label} className="bg-stone-900/60 border border-stone-700/60 rounded-lg p-4 text-center w-full max-w-md">
                 <p className="text-sm text-stone-400">{row.label}</p>
@@ -469,17 +468,17 @@ const FinancialProjections = () => {
             <div className="text-center bg-stone-900/60 border border-stone-700/60 rounded-lg p-4">
               <p className="text-sm text-stone-400">Investor total cash-out</p>
               <p className="text-2xl font-bold text-amber-300">{formatUsd(investorTotal)}</p>
-              <p className="text-xs text-stone-500">Capital + pref + residual split</p>
+              <p className="text-xs text-stone-500">Capital + preferred return only</p>
             </div>
             <div className="text-center bg-stone-900/60 border border-stone-700/60 rounded-lg p-4">
               <p className="text-sm text-stone-400">Investor net profit</p>
               <p className="text-2xl font-bold text-amber-200">{formatUsd(investorProfit)}</p>
-              <p className="text-xs text-stone-500">Meets 20% pref + upside</p>
+              <p className="text-xs text-stone-500">Meets 20% preferred return</p>
             </div>
             <div className="text-center bg-stone-900/60 border border-stone-700/60 rounded-lg p-4">
               <p className="text-sm text-stone-400">Makergy total capture</p>
               <p className="text-2xl font-bold text-stone-200">{formatUsd(makergyTotal)}</p>
-              <p className="text-xs text-stone-500">Backend + 4% dev + 6% GC fee</p>
+              <p className="text-xs text-stone-500">100% residual + 4% dev + 6% GC fee</p>
             </div>
           </div>
         </motion.div>

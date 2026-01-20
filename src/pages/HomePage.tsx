@@ -1,11 +1,20 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiDollarSign, FiTarget, FiUsers } from 'react-icons/fi';
+import { FiDollarSign, FiFileText, FiTarget } from 'react-icons/fi';
 import { IoRocketOutline } from 'react-icons/io5';
 import { BiBookOpen } from 'react-icons/bi';
 
 const HomePage = () => {
-  const sections = [
+  type Section = {
+    icon: JSX.Element;
+    title: string;
+    description: string;
+    link: string;
+    color: string;
+    disabled?: boolean;
+  };
+
+  const sections: Section[] = [
     {
       icon: <IoRocketOutline className="w-8 h-8" />,
       title: 'Project Summary',
@@ -30,17 +39,24 @@ const HomePage = () => {
     {
       icon: <FiTarget className="w-8 h-8" />,
       title: 'Investment Terms',
-      description: 'All-cash equity, SPV structure, 50/50 split',
+      description: 'All-cash equity, SPV structure, 100% residual to Makergy',
       link: '/funding-request',
       color: 'from-yellow-500 to-orange-500'
+    },
+    {
+      icon: <FiFileText className="w-8 h-8" />,
+      title: 'Developer Terms',
+      description: 'Confidential term sheet for Parade lot purchase',
+      link: '/developer-terms',
+      color: 'from-amber-500 to-stone-500'
     }
   ];
 
   const metrics = [
     { label: 'Target Sale Price', value: '$10M', subtext: 'Luxury exit' },
-    { label: 'All-in Target', value: '$7.0-7.5M', subtext: 'Land + build' },
-    { label: 'Build Target', value: '$5.0-6.0M', subtext: 'Construction budget' },
-    { label: 'Lot Target', value: '$2M', subtext: 'Acquisition goal' }
+    { label: 'All-in Target', value: '$7.5M', subtext: 'Land + build' },
+    { label: 'Build Target', value: '$5M', subtext: 'Construction budget' },
+    { label: 'Lot Target', value: '$2.5M', subtext: 'Acquisition goal' }
   ];
 
   return (
@@ -56,7 +72,7 @@ const HomePage = () => {
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-stone-300 max-w-3xl mx-auto px-4">
           Investor pitch for a 5,000 SF design-forward residence with a $10M target sale, all-cash equity (no bank debt),
-          and a $7.0-7.5M all-in budget (including a $2M lot) driven by a $5.0-6.0M build plan.
+          and a $7.5M all-in budget (including a $2.5M lot) driven by a $5M build plan.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">

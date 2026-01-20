@@ -4,11 +4,11 @@ import { FiCheckCircle, FiTrendingUp, FiUsers, FiZap, FiShield, FiHome } from 'r
 const ExecutiveSummary = () => {
   const keyPoints = [
     '5,000 SF conditioned living area with the Palermo concept plan.',
-    'Target sale price $10M; all-in budget $7.0-7.5M (land included).',
-    'Build target $5.0-6.0M; baseline construction $6.0M with a 70/30 hard vs finish split.',
+    'Target sale price $10M; all-in budget $7.5M (land included).',
+    'Build target $5M; baseline construction with a 70/30 hard vs finish split.',
     'Mid garage/mail room option $625K included in build target.',
     'All-cash equity, no bank debt, SPV holds land and project capital.',
-    'Return of capital + 20% preferred return, then 50/50 backend split.',
+    'Return of capital + 20% preferred return, then 100% residual profit to Makergy.',
     'Target delivery: Q4 2027 (best case 24 months from funding).'
   ];
 
@@ -74,8 +74,8 @@ const ExecutiveSummary = () => {
           >
             <h3 className="text-2xl font-semibold text-amber-200 mb-4">Execution Objective</h3>
             <p className="text-stone-200 leading-relaxed">
-              Lock the Palermo plan, finalize bids, and deliver within a $7.0-7.5M all-in target
-              driven by a $5.0-6.0M build plan while preserving the $10M exit strategy.
+              Lock the Palermo plan, finalize bids, and deliver within a $7.5M all-in target
+              driven by a $5M build plan while preserving the $10M exit strategy.
             </p>
           </motion.div>
         </div>
@@ -152,16 +152,21 @@ const ExecutiveSummary = () => {
           className="mt-12 bg-stone-900/80 border border-stone-800 rounded-xl p-8"
         >
           <h3 className="text-2xl font-semibold text-white mb-6 text-center">Project Economics Snapshot</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
-              <p className="text-3xl font-bold text-amber-300">$7.0-7.5M</p>
+              <p className="text-3xl font-bold text-amber-300">$7.5M</p>
               <p className="text-sm text-stone-300 mt-2">All-in target cost</p>
               <p className="text-xs text-stone-500 mt-1">Build + lot</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-amber-200">$5.0-6.0M</p>
+              <p className="text-3xl font-bold text-amber-200">$5M</p>
               <p className="text-sm text-stone-300 mt-2">Build target</p>
               <p className="text-xs text-stone-500 mt-1">Construction budget</p>
+            </div>
+            <div className="text-center">
+              <p className="text-3xl font-bold text-amber-100">$2.5M</p>
+              <p className="text-sm text-stone-300 mt-2">Lot target</p>
+              <p className="text-xs text-stone-500 mt-1">Acquisition goal</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-stone-200">$10M</p>
@@ -192,7 +197,7 @@ const ExecutiveSummary = () => {
             <div className="flex flex-col items-center text-center w-full">
               <FiUsers className="w-8 h-8 text-stone-200 mb-3" />
               <p className="text-sm text-stone-400 mb-2">Backend Split</p>
-              <p className="text-sm text-stone-200">50/50 promote after pref hurdle</p>
+              <p className="text-sm text-stone-200">100% residual profit to Makergy after pref</p>
             </div>
           </div>
         </motion.div>

@@ -15,6 +15,21 @@ export default defineConfig({
     host: true,
     fs: {
       strict: false
+    },
+    hmr: {
+      overlay: true
+    }
+  },
+  optimizeDeps: {
+    force: true,
+    include: []
+  },
+  clearScreen: false,
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
     }
   }
 })

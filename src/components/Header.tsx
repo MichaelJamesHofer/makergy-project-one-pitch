@@ -16,6 +16,7 @@ const Header = () => {
     { path: '/financial-projections', label: 'Budget & Returns' },
     { path: '/products-services', label: 'Design & Scope' },
     { path: '/funding-request', label: 'Investment Terms' },
+    { path: '/developer-terms', label: 'Developer Terms' },
   ];
 
   const activeIndex = navItems.findIndex(item => item.path === location.pathname);
