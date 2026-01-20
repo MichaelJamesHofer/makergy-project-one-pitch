@@ -91,7 +91,7 @@ const HomePage = () => {
             href="/docs/palermo-plan-011326.pdf"
             className="text-sm font-semibold text-amber-300 hover:text-amber-200 transition-colors"
           >
-            View plan PDF
+            Download Concept Plan - Rev. 0.1
           </a>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
