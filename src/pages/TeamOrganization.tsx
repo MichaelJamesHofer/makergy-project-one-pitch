@@ -6,12 +6,12 @@ const TeamOrganization = () => {
     {
       title: 'Tree Branch Holdings',
       subtitle: 'Parent + capital sponsor',
-      description: 'Governance oversight, capital partner relationships, and strategic direction.'
+      description: 'Governance oversight, capital partner relationships, and 80% equity ownership.'
     },
     {
       title: 'Makergy Inc.',
       subtitle: 'Operating entity',
-      description: 'Design-build execution, project management, and construction delivery.'
+      description: 'Design-build execution, project management, and 20% profit interest pool for the core team.'
     },
     {
       title: 'Project One SPV',
@@ -38,11 +38,67 @@ const TeamOrganization = () => {
     }
   ];
 
-  const keyRoles = [
-    { role: 'Design + BIM', detail: 'Finalize plan set and coordinate scope', icon: <FiTool /> },
-    { role: 'Permitting + Precon', detail: 'Submittals, bidding, and GMP alignment', icon: <FiBriefcase /> },
-    { role: 'Construction Ops', detail: 'Schedule, trades, and quality control', icon: <FiUsers /> },
-    { role: 'Capital + Governance', detail: 'Investor relations and reporting', icon: <FiShield /> },
+  const coreTeam = [
+    {
+      name: 'David Gosse',
+      role: 'Chief Visionary Officer',
+      focus: 'Story + sale',
+      bio: 'Serial entrepreneur and WoodLab co-founder guiding brand, buyer, and market positioning.',
+      icon: <FiShield />,
+      items: [
+        'Sets the signature theme and buyer profile',
+        'Final approval on aesthetic/budget trade-offs',
+        'Public face with brokers, media, and partners'
+      ]
+    },
+    {
+      name: 'Mardie Engelhardt',
+      role: 'Design Principal',
+      focus: 'Soul + feel',
+      bio: 'Principal architect with a total-design philosophy across luxury estates and interiors.',
+      icon: <FiTool />,
+      items: [
+        'Interior architecture + material palette',
+        'Lighting, landscape, and art curation',
+        'Staging and final visual direction'
+      ]
+    },
+    {
+      name: 'Michael Hofer',
+      role: 'Lead Systems & BIM Architect',
+      focus: 'Digital twin',
+      bio: 'Systems architect spanning BIM, automation, and integrated technology.',
+      icon: <FiBriefcase />,
+      items: [
+        'Owns BIM model and clash-free coordination',
+        'Smart home + low-voltage topology',
+        'Shop drawings for custom fabrication'
+      ]
+    },
+    {
+      name: 'Anthony Holzapple',
+      role: 'GC & Project Director',
+      focus: 'Build + risk',
+      bio: 'Licensed master builder known for custom fabrication and complex detailing.',
+      icon: <FiUsers />,
+      items: [
+        'GC of record, subs, and field ops',
+        'Schedule ownership + hard cost budget',
+        'Permitting and inspections'
+      ]
+    },
+    {
+      name: 'Capital & Finance Director',
+      role: '5th Member (TBD)',
+      focus: 'Fuel + scoreboard',
+      bio: 'Capital structuring and investor operations lead (to be named).',
+      icon: <FiShield />,
+      items: [
+        'Investor reporting + draw control',
+        'Bookkeeping and tax strategy',
+        'Capital disbursement governance'
+      ]
+    }
   ];
 
   const principles = [
@@ -53,6 +109,13 @@ const TeamOrganization = () => {
     'Clear path to market with exit-focused decisions',
   ];
 
+  const decisionMatrix = [
+    { title: 'Aesthetic & vibe', owner: 'Mardie', detail: 'Final say on look/feel unless it breaks the model.' },
+    { title: 'Constructability + risk', owner: 'Anthony', detail: 'Buildability and water-risk veto.' },
+    { title: 'Digital truth', owner: 'Michael', detail: 'BIM model is source of truth.' },
+    { title: 'Financial viability', owner: 'TBH Board', detail: 'Budget protection + solvency veto.' },
+  ];
+
   return (
     <div className="container mx-auto px-6 py-12">
       <motion.div
@@ -61,8 +124,11 @@ const TeamOrganization = () => {
         transition={{ duration: 0.3 }}
       >
         <h1 className="text-5xl font-bold text-white mb-4">Team & Delivery</h1>
-        <p className="text-xl text-slate-400 mb-12">
+        <p className="text-xl text-stone-300 mb-4">
           Makergy executes the build with Tree Branch Holdings governance and SPV protection
+        </p>
+        <p className="text-sm text-stone-400 mb-12">
+          Five-person senior team, one $10M signature project, zero middle management.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
@@ -72,11 +138,11 @@ const TeamOrganization = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 + idx * 0.05, duration: 0.25 }}
-              className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 border border-purple-800/50 rounded-xl p-6"
+              className="bg-gradient-to-r from-stone-900/80 to-amber-900/20 border border-amber-800/40 rounded-xl p-6"
             >
               <h3 className="text-xl font-semibold text-white mb-1">{entity.title}</h3>
-              <p className="text-sm text-purple-400 mb-3">{entity.subtitle}</p>
-              <p className="text-sm text-slate-300 leading-relaxed">{entity.description}</p>
+              <p className="text-sm text-amber-300 mb-3">{entity.subtitle}</p>
+              <p className="text-sm text-stone-200 leading-relaxed">{entity.description}</p>
             </motion.div>
           ))}
         </div>
@@ -96,14 +162,14 @@ const TeamOrganization = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25 + idx * 0.05, duration: 0.2 }}
                 whileHover={{ scale: 1.01 }}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-purple-500/30 hover:shadow-md hover:shadow-purple-500/10 transition-all duration-150"
+                className="bg-stone-900/80 border border-stone-800 rounded-xl p-6 hover:border-amber-400/40 hover:shadow-md hover:shadow-amber-500/10 transition-all duration-150"
               >
                 <h4 className="text-lg font-semibold text-white">{stream.phase}</h4>
-                <p className="text-sm text-slate-400 mt-2">{stream.goal}</p>
+                <p className="text-sm text-stone-400 mt-2">{stream.goal}</p>
                 <ul className="mt-4 space-y-2">
                   {stream.items.map((item, i) => (
-                    <li key={i} className="text-sm text-slate-300 flex items-start">
-                      <span className="text-purple-400 mr-2">•</span>
+                    <li key={i} className="text-sm text-stone-200 flex items-start">
+                      <span className="text-amber-300 mr-2">•</span>
                       {item}
                     </li>
                   ))}
@@ -117,24 +183,38 @@ const TeamOrganization = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.35, duration: 0.3 }}
-          className="bg-slate-900 border border-slate-800 rounded-xl p-8 mb-12"
+          className="bg-stone-900/80 border border-stone-800 rounded-xl p-8 mb-12"
         >
-          <h3 className="text-2xl font-semibold text-white mb-6">Key Roles</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {keyRoles.map((role, idx) => (
+          <h3 className="text-2xl font-semibold text-white mb-6">Core Team</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {coreTeam.map((member, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 + idx * 0.05, duration: 0.2 }}
                 whileHover={{ scale: 1.01 }}
-                className="text-center"
+                className="bg-stone-900/60 border border-stone-700/60 rounded-lg p-6"
               >
-                <div className="w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-3 text-purple-400">
-                  {role.icon}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center text-amber-300">
+                    {member.icon}
+                  </div>
+                <div>
+                  <h4 className="font-semibold text-white">{member.name}</h4>
+                  <p className="text-sm text-amber-300">{member.role}</p>
+                  <p className="text-xs text-stone-400">{member.focus}</p>
                 </div>
-                <h4 className="font-semibold text-white mb-1">{role.role}</h4>
-                <p className="text-sm text-slate-400">{role.detail}</p>
+              </div>
+              <p className="text-sm text-stone-300 mb-4">{member.bio}</p>
+              <ul className="space-y-2">
+                  {member.items.map((item) => (
+                    <li key={item} className="text-sm text-stone-200 flex items-start">
+                      <span className="text-amber-300 mr-2">•</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
           </div>
@@ -143,15 +223,33 @@ const TeamOrganization = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.3 }}
+          className="bg-stone-900/80 border border-stone-800 rounded-xl p-8 mb-12"
+        >
+          <h3 className="text-2xl font-semibold text-white mb-6">Decision Matrix</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {decisionMatrix.map((item) => (
+              <div key={item.title} className="bg-stone-900/60 border border-stone-700/60 rounded-lg p-6">
+                <p className="text-sm text-amber-300 font-semibold">{item.title}</p>
+                <p className="text-base text-white mt-1">{item.owner}</p>
+                <p className="text-sm text-stone-400 mt-2">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ delay: 0.45, duration: 0.25 }}
-          className="bg-slate-900 border border-slate-800 rounded-xl p-8 hover:border-purple-500/20 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-150"
+          className="bg-stone-900/80 border border-stone-800 rounded-xl p-8 hover:border-amber-400/30 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-150"
         >
           <h3 className="text-2xl font-semibold text-white mb-6">Operating Principles</h3>
           <div className="space-y-3">
             {principles.map((value, idx) => (
               <div key={idx} className="flex items-center">
-                <FiShield className="w-5 h-5 text-purple-400 mr-3" />
-                <span className="text-slate-300">{value}</span>
+                <FiShield className="w-5 h-5 text-amber-300 mr-3" />
+                <span className="text-stone-200">{value}</span>
               </div>
             ))}
           </div>

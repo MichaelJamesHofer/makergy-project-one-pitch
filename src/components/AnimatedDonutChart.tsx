@@ -35,11 +35,24 @@ const AnimatedDonutChart = ({
 }: AnimatedDonutChartProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
+  const [selectedSegment, setSelectedSegment] = useState<number | null>(null);
+  const selectedSegmentRef = useRef<number | null>(null);
+  const selectedTooltipPosition = useRef<{ x: number; y: number } | null>(null);
   const [animatedData, setAnimatedData] = useState<any[]>([]);
   
   // Calculate total for percentages
   const total = data?.reduce((sum, d) => sum + (d.value || 0), 0) || 0;
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    }).format(value);
   
+  useEffect(() => {
+    selectedSegmentRef.current = selectedSegment;
+  }, [selectedSegment]);
+
   useEffect(() => {
     if (!svgRef.current || !data || data.length === 0) return;
 
@@ -133,12 +146,12 @@ const AnimatedDonutChart = ({
     const tooltip = d3.select("body").append("div")
       .attr("class", "donut-tooltip")
       .style("position", "absolute")
-      .style("background", "rgba(15, 23, 42, 0.95)")
-      .style("color", "#e2e8f0")
+      .style("background", "rgba(20, 16, 13, 0.95)")
+      .style("color", "#efe7dc")
       .style("padding", "12px 16px")
-      .style("border", "1px solid rgba(139, 92, 246, 0.3)")
+      .style("border", "1px solid rgba(201, 168, 115, 0.3)")
       .style("border-radius", "8px")
-      .style("box-shadow", "0 4px 20px rgba(139, 92, 246, 0.3)")
+      .style("box-shadow", "0 4px 20px rgba(201, 168, 115, 0.3)")
       .style("font-size", "14px")
       .style("pointer-events", "none")
       .style("opacity", 0)
@@ -175,16 +188,15 @@ const AnimatedDonutChart = ({
     segments.selectAll("path")
       .on("mouseover", function(event, d: any) {
         const index = pieData.indexOf(d);
+        const selectedIndex = selectedSegmentRef.current;
         setHoveredSegment(index);
-        
-        // Animate to hover state
+
         d3.select(this)
           .transition()
           .duration(200)
           .attr("d", hoverArc)
           .style("filter", "url(#glow)");
 
-        // Show tooltip
         if (d && d.data) {
           const percentage = ((d.data.value / total) * 100).toFixed(1);
           tooltip.transition()
@@ -196,6 +208,10 @@ const AnimatedDonutChart = ({
               ${d.data.name || 'Unknown'}
             </div>
             <div style="display:flex; justify-content:space-between; gap:16px;">
+              <span>Amount:</span>
+              <span style="font-weight:bold">${formatCurrency(d.data.value)}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; gap:16px;">
               <span>Percentage:</span>
               <span style="font-weight:bold">${percentage}%</span>
             </div>
@@ -205,19 +221,116 @@ const AnimatedDonutChart = ({
         }
       })
       .on("mouseout", function(event, d) {
+        const selectedIndex = selectedSegmentRef.current;
+
+        if (selectedIndex !== null) {
+          const selectedDatum = pieData[selectedIndex];
+          setHoveredSegment(selectedIndex);
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .attr("d", arc)
+            .style("filter", "url(#drop-shadow)");
+
+          segments.selectAll("path")
+            .filter((_: any, i: number) => i === selectedIndex)
+            .transition()
+            .duration(200)
+            .attr("d", hoverArc)
+            .style("filter", "url(#glow)");
+
+          if (selectedDatum && selectedDatum.data) {
+            const percentage = ((selectedDatum.data.value / total) * 100).toFixed(1);
+            const position = selectedTooltipPosition.current;
+            const rect = svgRef.current?.getBoundingClientRect();
+            const fallbackX = rect ? rect.left + rect.width / 2 : event.pageX;
+            const fallbackY = rect ? rect.top + rect.height / 2 : event.pageY;
+            tooltip.transition()
+              .duration(200)
+              .style("opacity", 0.95);
+            tooltip.html(`
+              <div style="font-weight:bold; color:${selectedDatum.data.color}; margin-bottom:4px;">
+                ${selectedDatum.data.name || 'Unknown'}
+              </div>
+              <div style="display:flex; justify-content:space-between; gap:16px;">
+                <span>Amount:</span>
+                <span style="font-weight:bold">${formatCurrency(selectedDatum.data.value)}</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; gap:16px;">
+                <span>Percentage:</span>
+                <span style="font-weight:bold">${percentage}%</span>
+              </div>
+            `)
+              .style("left", (position?.x ?? fallbackX) + 15 + "px")
+              .style("top", (position?.y ?? fallbackY) - 10 + "px");
+          }
+          return;
+        }
+
         setHoveredSegment(null);
-        
-        // Animate back to normal
         d3.select(this)
           .transition()
           .duration(200)
           .attr("d", arc)
           .style("filter", "url(#drop-shadow)");
 
-        // Hide tooltip
         tooltip.transition()
           .duration(200)
           .style("opacity", 0);
+      })
+      .on("click", function(event, d: any) {
+        const index = pieData.indexOf(d);
+        const selectedIndex = selectedSegmentRef.current;
+
+        if (selectedIndex === index) {
+          selectedSegmentRef.current = null;
+          selectedTooltipPosition.current = null;
+          setSelectedSegment(null);
+          setHoveredSegment(null);
+          segments.selectAll("path")
+            .transition()
+            .duration(150)
+            .attr("d", arc)
+            .style("filter", "url(#drop-shadow)");
+          tooltip.transition()
+            .duration(150)
+            .style("opacity", 0);
+          return;
+        }
+
+        selectedSegmentRef.current = index;
+        selectedTooltipPosition.current = { x: event.pageX, y: event.pageY };
+        setSelectedSegment(index);
+        setHoveredSegment(index);
+        segments.selectAll("path")
+          .transition()
+          .duration(150)
+          .attr("d", arc)
+          .style("filter", "url(#drop-shadow)");
+        d3.select(this)
+          .transition()
+          .duration(150)
+          .attr("d", hoverArc)
+          .style("filter", "url(#glow)");
+        const percentage = ((d.data.value / total) * 100).toFixed(1);
+        tooltip.transition()
+          .duration(200)
+          .style("opacity", 0.95);
+        tooltip.html(`
+          <div style="font-weight:bold; color:${d.data.color}; margin-bottom:4px;">
+            ${d.data.name || 'Unknown'}
+          </div>
+          <div style="display:flex; justify-content:space-between; gap:16px;">
+            <span>Amount:</span>
+            <span style="font-weight:bold">${formatCurrency(d.data.value)}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; gap:16px;">
+            <span>Percentage:</span>
+            <span style="font-weight:bold">${percentage}%</span>
+          </div>
+        `)
+          .style("left", (event.pageX + 15) + "px")
+          .style("top", (event.pageY - 10) + "px");
       });
 
     // Add labels
@@ -247,7 +360,7 @@ const AnimatedDonutChart = ({
         labelGroup.append("polyline")
           .attr("points", `${arc.centroid(d)[0]},${arc.centroid(d)[1]} ${x * 0.8},${y * 0.8} ${x},${y}`)
           .style("fill", "none")
-          .style("stroke", "#64748b")
+          .style("stroke", "#7b6a5d")
           .style("stroke-width", 1)
           .style("opacity", 0.6);
 
@@ -258,7 +371,7 @@ const AnimatedDonutChart = ({
           .attr("dy", "0.35em")
           .style("text-anchor", x > 0 ? "start" : "end")
           .style("font-size", "12px")
-          .style("fill", "#cbd5e1");
+          .style("fill", "#d4c7b8");
 
         text.append("tspan")
           .attr("x", x)
@@ -271,29 +384,11 @@ const AnimatedDonutChart = ({
             .attr("x", x)
             .attr("dy", "1.2em")
             .style("font-weight", "normal")
-            .style("fill", "#94a3b8")
+            .style("fill", "#b7a999")
             .text(`${percentage}%`);
         }
       });
     }
-
-    // Add center text (only show total number)
-    const centerText = g.append("g")
-      .attr("class", "center-text")
-      .style("opacity", 0);
-      
-    // Animate center text appearance
-    centerText.transition()
-      .duration(animationDuration * 1000)
-      .style("opacity", 1);
-
-    centerText.append("text")
-      .attr("text-anchor", "middle")
-      .attr("dy", "0.35em")
-      .style("font-size", "32px")
-      .style("font-weight", "bold")
-      .style("fill", "#ffffff")
-      .text(total);
 
     // Cleanup
     return () => {
@@ -305,14 +400,32 @@ const AnimatedDonutChart = ({
   if (!data || data.length === 0) {
     return (
       <div className="donut-chart-container flex items-center justify-center" style={{ width, height }}>
-        <p className="text-slate-500">No data available</p>
+        <p className="text-stone-500">No data available</p>
       </div>
     );
   }
 
+  const activeIndex = selectedSegment ?? hoveredSegment;
+  const activeData = activeIndex !== null ? animatedData[activeIndex] : null;
+  const activePercentage = activeData ? ((activeData.data.value / total) * 100).toFixed(1) : null;
+  const displayTitle = activeData ? activeData.data.name : 'Total';
+  const displayValue = activeData ? formatCurrency(activeData.data.value) : formatCurrency(total);
+
   return (
-    <div className="donut-chart-container">
-      <svg ref={svgRef} className="donut-chart"></svg>
+    <div
+      className="donut-chart-container flex flex-col items-center w-full"
+      style={{ maxWidth: width }}
+    >
+      <div className="relative flex items-center justify-center w-full" style={{ aspectRatio: '1 / 1' }}>
+        <svg ref={svgRef} className="donut-chart w-full h-full"></svg>
+      </div>
+      <div className="mt-4 text-center">
+        <span className="text-xs uppercase tracking-wide text-stone-400">{displayTitle}</span>
+        <span className="block text-2xl font-semibold text-white">{displayValue}</span>
+        {activePercentage && (
+          <span className="text-xs text-amber-300">{activePercentage}%</span>
+        )}
+      </div>
     </div>
   );
 };

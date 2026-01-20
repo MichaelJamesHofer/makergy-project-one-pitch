@@ -212,14 +212,14 @@ const AnimatedLineChart = ({
                     y1={y}
                     x2={containerWidth - padding.right}
                     y2={y}
-                    stroke="#64748b"
+                    stroke="#7b6a5d"
                     strokeWidth="1"
                     strokeDasharray="2 2"
                   />
                   <text
                     x={padding.left - 10}
                     y={y + 4}
-                    fill="#94a3b8"
+                    fill="#c1b4a5"
                     fontSize="12"
                     textAnchor="end"
                   >
@@ -236,7 +236,7 @@ const AnimatedLineChart = ({
           <text
             x={20}
             y={height / 2}
-            fill="#94a3b8"
+            fill="#c1b4a5"
             fontSize="12"
             textAnchor="middle"
             transform={`rotate(-90 20 ${height / 2})`}
@@ -359,7 +359,7 @@ const AnimatedLineChart = ({
               key={index}
               x={x}
               y={height - padding.bottom + 20}
-              fill="#94a3b8"
+              fill="#c1b4a5"
               fontSize="11"
               textAnchor="middle"
             >
@@ -384,7 +384,7 @@ const AnimatedLineChart = ({
                 <text
                   x="25"
                   y="4"
-                  fill="#94a3b8"
+                  fill="#c1b4a5"
                   fontSize="12"
                 >
                   {series.name}
@@ -407,8 +407,8 @@ const AnimatedLineChart = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="bg-slate-950 border border-slate-700 rounded-lg p-3 shadow-2xl">
-            <div className="text-xs text-slate-400 mb-2 font-semibold">
+          <div className="bg-stone-950 border border-stone-700 rounded-lg p-3 shadow-2xl">
+            <div className="text-xs text-stone-400 mb-2 font-semibold">
               {nearestPoints[0]?.point.label}
             </div>
             {nearestPoints.map((nearest, idx) => {
@@ -420,7 +420,7 @@ const AnimatedLineChart = ({
                       className="w-2 h-2 rounded-full" 
                       style={{ backgroundColor: series.color }}
                     />
-                    <span className="text-xs text-slate-300">{series.name}:</span>
+                    <span className="text-xs text-stone-300">{series.name}:</span>
                   </div>
                   <span className="text-sm font-bold text-white">
                     <AnimatedNumber 

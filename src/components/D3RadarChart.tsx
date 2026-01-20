@@ -29,7 +29,7 @@ export interface RadarChartProps {
 
 const D3RadarChart = ({
   data = [],
-  colors = ["#8b5cf6", "#3b82f6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"],
+  colors = ["#c9a873", "#b6855d", "#8d6b4f", "#a9825a", "#d2b07f", "#9a7a60"],
   width = 500,
   height = 500,
   levels = 5,
@@ -98,12 +98,12 @@ const D3RadarChart = ({
     const tooltip = d3.select("body").append("div")
       .attr("class", "radar-tooltip")
       .style("position", "absolute")
-      .style("background", "rgba(15, 23, 42, 0.95)")
-      .style("color", "#e2e8f0")
+      .style("background", "rgba(20, 16, 13, 0.95)")
+      .style("color", "#efe7dc")
       .style("padding", "8px 12px")
-      .style("border", "1px solid rgba(139, 92, 246, 0.3)")
+      .style("border", "1px solid rgba(201, 168, 115, 0.3)")
       .style("border-radius", "6px")
-      .style("box-shadow", "0 4px 20px rgba(139, 92, 246, 0.2)")
+      .style("box-shadow", "0 4px 20px rgba(201, 168, 115, 0.2)")
       .style("font-size", "12px")
       .style("pointer-events", "none")
       .style("opacity", 0)
@@ -122,7 +122,7 @@ const D3RadarChart = ({
         .attr("class", "grid-circle")
         .attr("r", d => radius * d / levels)
         .style("fill", "none")
-        .style("stroke", "#334155")
+        .style("stroke", "#3f342c")
         .style("stroke-opacity", opacityCircles)
         .style("stroke-dasharray", "3,3");
       
@@ -137,7 +137,7 @@ const D3RadarChart = ({
           .attr("y", d => -d * radius / levels)
           .attr("dy", "0.4em")
           .style("font-size", "10px")
-          .style("fill", "#94a3b8")
+          .style("fill", "#b7a999")
           .style("opacity", 0.5)
           .style("pointer-events", "none")
           .text(d => Math.round(maxValue * d / levels) + "%");
@@ -159,7 +159,7 @@ const D3RadarChart = ({
         .attr("x2", (d, i) => rScale(maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
         .attr("y2", (d, i) => rScale(maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
         .attr("class", "line")
-        .style("stroke", "#334155")
+        .style("stroke", "#3f342c")
         .style("stroke-opacity", 0.15)
         .style("stroke-width", "1px");
       
@@ -174,7 +174,7 @@ const D3RadarChart = ({
           .text(d => d)
           .call(wrap, wrapWidth)
           .style("font-size", "11px")
-          .style("fill", "#cbd5e1");
+          .style("fill", "#d4c7b8");
       }
     }
     
