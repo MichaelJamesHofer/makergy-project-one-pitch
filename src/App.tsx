@@ -1,0 +1,38 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import PasswordProtection from './components/PasswordProtection'
+import HomePage from './pages/HomePage'
+import ExecutiveSummary from './pages/ExecutiveSummary'
+import MarketAnalysis from './pages/MarketAnalysis'
+import FinancialProjections from './pages/FinancialProjections'
+import ProductsServices from './pages/ProductsServices'
+import TeamOrganization from './pages/TeamOrganization'
+import FundingRequest from './pages/FundingRequest'
+import './App.css'
+
+function App() {
+  return (
+    <Router>
+      <PasswordProtection>
+        <div className="min-h-screen bg-slate-950 flex flex-col">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/executive-summary" element={<ExecutiveSummary />} />
+              <Route path="/market-analysis" element={<MarketAnalysis />} />
+              <Route path="/financial-projections" element={<FinancialProjections />} />
+              <Route path="/products-services" element={<ProductsServices />} />
+              <Route path="/team-organization" element={<TeamOrganization />} />
+              <Route path="/funding-request" element={<FundingRequest />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </PasswordProtection>
+    </Router>
+  )
+}
+
+export default App

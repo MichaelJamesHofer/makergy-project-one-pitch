@@ -1,0 +1,109 @@
+Month,Category,Item,Amount,Type,Running Balance,Notes
+0,Initial,Seed Funding,1000000,Income,1000000,Initial $1M seed round
+1,Personnel,CEO/CTO Salary,-8000,Expense,992000,Technical founder monthly
+1,Personnel,COO Salary,-5000,Expense,987000,Business co-founder monthly
+1,Personnel,Payroll Taxes,-3900,Expense,983100,30% burden rate
+1,Infrastructure,AWS Setup,-3000,Expense,980100,Initial cloud infrastructure
+1,Infrastructure,Domain/SSL,-500,Expense,979600,Annual fees
+1,Infrastructure,Dev Tools,-1000,Expense,978600,GitHub and monitoring tools
+1,Marketing,Launch Prep,-5000,Expense,973600,Content creation
+1,Operations,Legal Setup,-5000,Expense,968600,Corporation and contracts
+1,Operations,Accounting Setup,-1500,Expense,967100,Bookkeeping setup
+1,Operations,Insurance,-1500,Expense,965600,General liability
+2,Revenue,Affiliate Commissions,2000,Income,967600,Early adopter revenue
+2,Personnel,CEO/CTO Salary,-8000,Expense,959600,
+2,Personnel,COO Salary,-5000,Expense,954600,
+2,Personnel,Senior Developer,-7000,Expense,947600,First technical hire
+2,Personnel,Recruiting Costs,-2000,Expense,945600,Developer hiring costs
+2,Personnel,Payroll Taxes,-6000,Expense,939600,
+2,Infrastructure,AWS/Hosting,-2000,Expense,937600,Monthly hosting
+2,Infrastructure,Tools/Licenses,-800,Expense,936800,
+2,Marketing,Launch Campaign,-10000,Expense,926800,Initial marketing push
+2,Marketing,Content Creation,-3000,Expense,923800,
+2,Operations,Legal,-1000,Expense,922800,Ongoing legal
+2,Operations,Accounting,-500,Expense,922300,Monthly bookkeeping
+3,Revenue,Affiliate Commissions,5000,Income,927300,
+3,Revenue,Subscriptions,3000,Income,930300,First paid users
+3,Personnel,CEO/CTO Salary,-8000,Expense,922300,
+3,Personnel,COO Salary,-5000,Expense,917300,
+3,Personnel,Senior Developer,-7000,Expense,910300,
+3,Personnel,Marketing Manager,-4000,Expense,906300,Marketing hire
+3,Personnel,Contractors,-5000,Expense,901300,Design and content
+3,Personnel,Payroll Taxes,-7200,Expense,894100,
+3,Infrastructure,AWS/Hosting,-3000,Expense,891100,Scaling infrastructure
+3,Infrastructure,API Integrations,-2000,Expense,889100,Vendor APIs
+3,Infrastructure,Tools/Licenses,-1000,Expense,888100,
+3,Marketing,Paid Acquisition,-15000,Expense,873100,Google/Meta ads
+3,Marketing,SEO Tools,-500,Expense,872600,Ahrefs etc
+3,Marketing,Content,-2000,Expense,870600,Ongoing content
+3,Operations,Legal,-1000,Expense,869600,
+3,Operations,Accounting,-500,Expense,869100,
+3,Operations,Office/Misc,-500,Expense,868600,
+4,Revenue,Affiliate Commissions,8000,Income,876600,Q2 begins
+4,Revenue,Subscriptions,5000,Income,881600,
+4,Personnel,CEO/CTO Salary,-8000,Expense,873600,
+4,Personnel,COO Salary,-6000,Expense,867600,Potential increase pending milestones
+4,Personnel,Senior Developer,-7000,Expense,860600,
+4,Personnel,Marketing Manager,-4000,Expense,856600,
+4,Personnel,Contractors,-3000,Expense,853600,
+4,Personnel,Payroll Taxes,-7800,Expense,845800,
+4,Infrastructure,AWS/Hosting,-3500,Expense,842300,
+4,Infrastructure,Tools/Licenses,-1200,Expense,841100,
+4,Infrastructure,Security Audit,-2500,Expense,838600,Quarterly audit
+4,Marketing,Paid Acquisition,-12000,Expense,826600,
+4,Marketing,Content/SEO,-3000,Expense,823600,
+4,Marketing,Partnerships,-5000,Expense,818600,Influencer deals
+4,Operations,Legal/Compliance,-2000,Expense,816600,
+4,Operations,Accounting,-500,Expense,816100,
+5,Revenue,Affiliate Commissions,12000,Income,828100,
+5,Revenue,Subscriptions,8000,Income,836100,Growing subscriber base
+5,Revenue,Advertising,2000,Income,838100,New revenue stream
+5,Personnel,CEO/CTO Salary,-8000,Expense,830100,
+5,Personnel,COO Salary,-7000,Expense,823100,Milestone achieved - increase
+5,Personnel,Senior Developer,-7000,Expense,816100,
+5,Personnel,Junior Developer,-4500,Expense,811600,New junior hire
+5,Personnel,Marketing Manager,-4000,Expense,807600,
+5,Personnel,Contractors,-2000,Expense,805600,
+5,Personnel,Payroll Taxes,-9150,Expense,796450,
+5,Infrastructure,AWS/Hosting,-4000,Expense,792450,
+5,Infrastructure,Tools/Licenses,-1500,Expense,790950,
+5,Infrastructure,Backup Systems,-1000,Expense,789950,
+5,Marketing,Paid Acquisition,-10000,Expense,779950,
+5,Marketing,Content/SEO,-3000,Expense,776950,
+5,Marketing,Conference,-5000,Expense,771950,Industry event
+5,Operations,Legal,-1500,Expense,770450,
+5,Operations,Accounting,-500,Expense,769950,
+6,Revenue,Affiliate Commissions,15000,Income,784950,
+6,Revenue,Subscriptions,12000,Income,796950,
+6,Revenue,Advertising,3000,Income,799950,
+6,Personnel,CEO/CTO Salary,-8000,Expense,791950,
+6,Personnel,COO Salary,-7000,Expense,784950,
+6,Personnel,Senior Developer,-7000,Expense,777950,
+6,Personnel,Junior Developer,-4500,Expense,773450,
+6,Personnel,Marketing Manager,-4000,Expense,769450,
+6,Personnel,Payroll Taxes,-9150,Expense,760300,
+6,Infrastructure,AWS/Hosting,-4500,Expense,755800,
+6,Infrastructure,Tools/Licenses,-1500,Expense,754300,
+6,Infrastructure,Performance Opt,-2000,Expense,752300,
+6,Marketing,Paid Acquisition,-8000,Expense,744300,
+6,Marketing,Content/SEO,-3000,Expense,741300,
+6,Marketing,Partnerships,-3000,Expense,738300,
+6,Operations,Legal,-1500,Expense,736800,
+6,Operations,Accounting,-2000,Expense,734800,Quarterly filing
+7,Revenue,Total Revenue,38000,Income,772800,Q3 begins
+7,Expenses,Total Operating,-57150,Expense,715650,All categories
+8,Revenue,Total Revenue,42000,Income,757650,
+8,Expenses,Total Operating,-48000,Expense,709650,
+9,Revenue,Total Revenue,48000,Income,757650,Approaching break-even
+9,Expenses,Total Operating,-47000,Expense,710650,
+10,Revenue,Total Revenue,52000,Income,762650,
+10,Expenses,Total Operating,-47000,Expense,715650,
+11,Revenue,Total Revenue,58000,Income,773650,
+11,Expenses,Total Operating,-48000,Expense,725650,
+12,Revenue,Total Revenue,65000,Income,790650,Year end
+12,Expenses,Total Operating,-50000,Expense,740650,
+Summary,Year 1,Total Revenue,389000,Income,,
+Summary,Year 1,Total Expenses,-648350,Expense,,
+Summary,Year 1,Net Burn,-259350,,,
+Summary,Year 1,Ending Balance,740650,,,
+Summary,Year 1,Remaining Runway,18,,,months
