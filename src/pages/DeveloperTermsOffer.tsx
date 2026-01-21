@@ -66,6 +66,50 @@ const DeveloperTermsOffer = () => {
     },
   ];
 
+  const paymentStream = [
+    '$150,000 non-refundable deposit due upon execution.',
+    '$500,000 due upon recordation of the final subdivision plat; Seller conveys the Property and records a Seller Deed of Trust.',
+    '$500,000 due six (6) months after plat recordation and every six (6) months thereafter until the Base Lot Price principal and all accrued interest are paid in full.',
+  ];
+
+  const profitDefinition = [
+    'Base Lot Price principal',
+    'Hard construction costs',
+    'Direct site work',
+    'Permits and impact fees',
+    'Construction loan interest and fees',
+    'Seller interest paid at 9%',
+  ];
+
+  const trueUpTiers = [
+    '≤10% margin: No True-Up',
+    '>10% and ≤12.5% margin: True-Up = 50% × (Profit − 10% of Total Cost)',
+    '>12.5% and ≤15% margin: True-Up = 75% × (Profit − 12.5% of Total Cost)',
+    '>15% margin: True-Up = 100% × (Profit − 15% of Total Cost)',
+    'True-Up capped at $1,000,000.',
+  ];
+
+  const auditProcess = [
+    'At sale closing, Buyer pays the full $1,000,000 True-Up (no audit required); or',
+    'Buyer proposes a lesser True-Up, triggering a mandatory audit unless waived by Seller.',
+    'If full $1,000,000 is not tendered, Buyer deposits $1,000,000 into escrow at closing; audit may complete post-closing.',
+    'Audit scope is limited to sale price, Total Cost, Profit, margin, and correct True-Up calculation.',
+  ];
+
+  const additionalLots = [
+    'Buyer may reserve up to two (2) additional lots.',
+    'Upon a bona fide third-party offer, Buyer has ten (10) days to post a $500,000 non-refundable deposit per lot or Seller may sell freely.',
+  ];
+
+  const selfPerformedWork = [
+    'Permitted at cost only; no profit, markup, overhead, or internal fees included in Total Cost.',
+    'Actual cost is limited to direct labor, materials, equipment rental, third-party subcontract costs, and payroll taxes paid.',
+    'Buyer maintains records supporting actual cost for review only in connection with the audit procedures.',
+    'Any profit or overhead found in self-performed work is excluded from Total Cost and True-Up recalculates.',
+    'Construction loan interest, Seller interest, and loan fees are governed elsewhere and not adjusted here.',
+    'Seller knowledge of self-performed work does not approve inclusion of profit or markup in Total Cost.',
+  ];
+
   return (
     <div className="container mx-auto px-6 py-12">
       <motion.div
@@ -217,6 +261,148 @@ const DeveloperTermsOffer = () => {
             <p className="text-xs text-stone-500 mt-4">
               Interest payable to Seller under this term sheet is in addition to, and not counted toward, the $3,500,000 cap.
             </p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.2 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12"
+        >
+          <div className="bg-gradient-to-br from-stone-900/80 to-amber-900/20 border border-amber-800/40 rounded-xl p-8">
+            <h2 className="text-2xl font-semibold text-white mb-4">Payment Stream</h2>
+            <div className="space-y-4">
+              {paymentStream.map((item) => (
+                <div key={item} className="flex items-start">
+                  <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                  <p className="text-stone-200 text-sm">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-stone-900/80 border border-stone-800 rounded-xl p-8">
+            <h2 className="text-2xl font-semibold text-white mb-4">Interest, Application, Security</h2>
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                <p className="text-stone-200 text-sm">
+                  Interest accrues on unpaid Base Lot Price principal at 9% per annum, simple interest, commencing upon plat recordation.
+                </p>
+              </div>
+              <div className="flex items-start">
+                <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                <p className="text-stone-200 text-sm">Payments apply first to accrued interest, then to outstanding principal.</p>
+              </div>
+              <div className="flex items-start">
+                <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                <p className="text-stone-200 text-sm">
+                  Buyer delivers a Seller Deed of Trust at plat recordation securing unpaid principal and interest, subordinate only to the
+                  subdivision construction loan.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.45, duration: 0.25 }}
+          className="bg-stone-900/80 border border-stone-800 rounded-xl p-8 mb-12"
+        >
+          <h2 className="text-2xl font-semibold text-white mb-4">Profit Definition (Confidential)</h2>
+          <p className="text-stone-200 text-sm mb-4">
+            Profit is calculated at sale closing as Gross Sale Price minus Total Cost. Total Cost includes:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {profitDefinition.map((item) => (
+              <div key={item} className="flex items-start">
+                <FiCheckCircle className="w-4 h-4 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                <p className="text-stone-200 text-sm">{item}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-stone-500 mt-4">Profit is calculated once at sale closing and remains confidential.</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.2 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12"
+        >
+          <div className="bg-gradient-to-br from-stone-900/80 to-amber-900/20 border border-amber-800/40 rounded-xl p-8">
+            <h2 className="text-2xl font-semibold text-white mb-4">True-Up Mechanism</h2>
+            <p className="text-sm text-stone-400 mb-4">Single tier, non-incremental, based on Profit Margin (Profit ÷ Total Cost).</p>
+            <div className="space-y-3">
+              {trueUpTiers.map((item) => (
+                <div key={item} className="flex items-start">
+                  <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                  <p className="text-stone-200 text-sm">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-stone-900/80 border border-stone-800 rounded-xl p-8">
+            <h2 className="text-2xl font-semibold text-white mb-4">True-Up Election & Audit</h2>
+            <div className="space-y-4">
+              {auditProcess.map((item) => (
+                <div key={item} className="flex items-start">
+                  <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                  <p className="text-stone-200 text-sm">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.55, duration: 0.25 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12"
+        >
+          <div className="bg-stone-900/80 border border-stone-800 rounded-xl p-8">
+            <h2 className="text-2xl font-semibold text-white mb-4">Additional Lot Reservations</h2>
+            <div className="space-y-4">
+              {additionalLots.map((item) => (
+                <div key={item} className="flex items-start">
+                  <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                  <p className="text-stone-200 text-sm">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-gradient-to-br from-stone-900/80 to-amber-900/15 border border-amber-800/40 rounded-xl p-8">
+            <h2 className="text-2xl font-semibold text-white mb-4">Non-Precedent / Non-Binding</h2>
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                <p className="text-stone-200 text-sm">This term sheet is project-specific and establishes no precedent.</p>
+              </div>
+              <div className="flex items-start">
+                <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                <p className="text-stone-200 text-sm">This term sheet is non-binding and subject to definitive agreements.</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.2 }}
+          className="bg-stone-900/80 border border-stone-800 rounded-xl p-8"
+        >
+          <h2 className="text-2xl font-semibold text-white mb-4">Self-Performed / Related-Party Work</h2>
+          <div className="space-y-4">
+            {selfPerformedWork.map((item) => (
+              <div key={item} className="flex items-start">
+                <FiCheckCircle className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
+                <p className="text-stone-200 text-sm">{item}</p>
+              </div>
+            ))}
           </div>
         </motion.div>
       </motion.div>
