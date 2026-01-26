@@ -32,15 +32,31 @@ const Header = () => {
       return;
     }
     
+    // Get the actual element and its computed width
+    const currentRef = navRefs.current[currentIndex];
+    if (!currentRef) {
+      setIndicatorProps({ x: 0, width: 0 });
+      return;
+    }
+
+    // Use getBoundingClientRect for more accurate measurements
+    const currentRect = currentRef.getBoundingClientRect();
+    const width = currentRect.width;
+    
+    if (width === 0) {
+      // Width not ready yet, don't update
+      return;
+    }
+    
     let x = 0;
     for (let i = 0; i < currentIndex; i++) {
       const ref = navRefs.current[i];
       if (ref) {
-        x += ref.offsetWidth || 0;
+        const rect = ref.getBoundingClientRect();
+        x += rect.width || 0;
       }
     }
     
-    const width = navRefs.current[currentIndex]?.offsetWidth || 0;
     setIndicatorProps({ x, width });
   }, [hoveredIndex, activeIndex]);
 
@@ -53,19 +69,44 @@ const Header = () => {
   React.useEffect(() => {
     setMounted(true);
     
-    // Initial calculation after a brief delay to ensure DOM is ready
-    const timeoutId = setTimeout(() => {
-      calculateIndicatorProps();
-    }, 100);
+    // Initial calculation after DOM is ready
+    const initCalculation = () => {
+      requestAnimationFrame(() => {
+        calculateIndicatorProps();
+      });
+    };
 
-    // Window resize handler
+    // Try multiple times to catch font loading and layout
+    const timeout1 = setTimeout(initCalculation, 100);
+    const timeout2 = setTimeout(initCalculation, 300);
+    const timeout3 = setTimeout(initCalculation, 500);
+
+    // Window resize handler with debouncing
+    let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
-      calculateIndicatorProps();
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        requestAnimationFrame(() => {
+          calculateIndicatorProps();
+        });
+      }, 50);
     };
     window.addEventListener('resize', handleResize);
 
+    // Also recalculate when fonts are loaded
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        requestAnimationFrame(() => {
+          calculateIndicatorProps();
+        });
+      });
+    }
+
     return () => {
-      clearTimeout(timeoutId);
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
+      clearTimeout(resizeTimeout);
       window.removeEventListener('resize', handleResize);
     };
   }, [calculateIndicatorProps]);
@@ -74,25 +115,65 @@ const Header = () => {
   React.useEffect(() => {
     if (!mounted) return;
 
-    const observers: ResizeObserver[] = [];
-    
-    // Set up observers for all refs
-    navRefs.current.forEach((ref) => {
-      if (ref) {
-        const observer = new ResizeObserver(() => {
-          calculateIndicatorProps();
-        });
-        observer.observe(ref);
-        observers.push(observer);
-      }
-    });
+    let observers: ResizeObserver[] = [];
+    let setupTimeout: NodeJS.Timeout;
+    let retryTimeout: NodeJS.Timeout;
 
-    // Also recalculate after observers are set up
-    setTimeout(() => {
-      calculateIndicatorProps();
-    }, 50);
+    // Wait for fonts and layout to be ready
+    const setupObservers = () => {
+      let allRefsReady = true;
+      
+      // Check if all refs are populated and have valid widths
+      navRefs.current.forEach((ref) => {
+        if (!ref || ref.offsetWidth === 0) {
+          allRefsReady = false;
+        }
+      });
+
+      // If refs aren't ready, try again
+      if (!allRefsReady) {
+        retryTimeout = setTimeout(() => {
+          requestAnimationFrame(setupObservers);
+        }, 50);
+        return;
+      }
+
+      // Clean up any existing observers
+      observers.forEach(observer => observer.disconnect());
+      observers = [];
+
+      // Set up observers for all refs
+      navRefs.current.forEach((ref) => {
+        if (ref) {
+          const observer = new ResizeObserver(() => {
+            // Use requestAnimationFrame to ensure layout is complete
+            requestAnimationFrame(() => {
+              calculateIndicatorProps();
+            });
+          });
+          observer.observe(ref);
+          observers.push(observer);
+        }
+      });
+
+      // Recalculate after observers are set up
+      requestAnimationFrame(() => {
+        calculateIndicatorProps();
+        // Also recalculate after a short delay to catch any late layout changes
+        setTimeout(() => {
+          calculateIndicatorProps();
+        }, 100);
+      });
+    };
+
+    // Initial setup with delay to ensure DOM is ready
+    setupTimeout = setTimeout(() => {
+      requestAnimationFrame(setupObservers);
+    }, 100);
 
     return () => {
+      clearTimeout(setupTimeout);
+      clearTimeout(retryTimeout);
       observers.forEach(observer => observer.disconnect());
     };
   }, [mounted, calculateIndicatorProps]);
