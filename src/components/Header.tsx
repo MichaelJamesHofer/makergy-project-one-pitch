@@ -186,83 +186,91 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75 border-border">
-      <div className="container min-h-[5rem]">
-        <div className="flex h-full min-h-[5rem] items-center justify-between px-4 md:px-6">
+      <div className="container min-h-[5rem] xl:min-h-[7rem]">
+        {/* Top row: Title and mobile menu button */}
+        <div className="flex flex-col xl:flex-row h-auto xl:h-auto items-center xl:items-center justify-center xl:justify-between px-4 md:px-6 py-3 xl:py-4 gap-3 xl:gap-0 w-full">
           {/* Logo / Title */}
-          <div className="flex items-center flex-shrink-0">
-            <h1 className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-[0.3em] text-foreground">
-              <span className="hidden sm:inline">Makergy Project One</span>
-              <span className="sm:hidden">Project One</span>
+          <div className="flex flex-col items-center flex-shrink-0 w-full xl:w-auto px-4 xl:px-0">
+            <h1 className="text-sm sm:text-base md:text-lg xl:text-lg font-semibold uppercase tracking-[0.3em] text-foreground text-center">
+              Makergy Project One
             </h1>
-          </div>
-          
-          {/* Desktop Navigation - Only show on very large screens */}
-          <nav className="hidden xl:flex items-center flex-1 justify-end min-w-0">
-            <LayoutGroup id="header-nav">
+            {/* Decorative gold line that fades on sides */}
+            <div className="relative mt-2 h-px w-full max-w-full">
               <div 
-                ref={navContainerRef}
-                className="relative flex items-center"
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                {navItems.map((item, index) => (
-                  <div 
-                    key={item.path} 
-                    ref={el => {
-                      if (navRefs.current[index] !== el) {
-                        navRefs.current[index] = el;
-                        // Trigger calculation when ref is set or updated
-                        if (el && mounted) {
-                          requestAnimationFrame(() => {
-                            calculateIndicatorProps();
-                          });
-                        }
-                      }
-                    }}
-                    className="relative flex-shrink-0"
-                    onMouseEnter={() => setHoveredIndex(index)}
-                  >
-                    <Link
-                      to={item.path}
-                      className="relative text-xs font-medium uppercase tracking-widest transition-colors duration-150 px-3 xl:px-4 py-2 whitespace-nowrap text-foreground/70 hover:text-foreground inline-block"
-                      style={{
-                        color: activeIndex === index ? '#fff' : undefined
-                      }}
-                    >
-                      {item.label}
-                    </Link>
-                  </div>
-                ))}
-                
-                {/* Animated indicator */}
-                {activeIndex !== -1 && mounted && width > 0 && (
-                  <motion.div
-                    className="absolute bottom-0 h-0.5 bg-amber-400 pointer-events-none z-10"
-                    initial={false}
-                    animate={{
-                      x,
-                      width,
-                      opacity: hoveredIndex !== null ? 0.7 : 1
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 350,
-                      damping: 30
-                    }}
-                  />
-                )}
-              </div>
-            </LayoutGroup>
-          </nav>
+                className="absolute left-0 right-0 h-px"
+                style={{
+                  background: 'linear-gradient(to right, transparent 0%, hsl(var(--accent)) 15%, hsl(var(--accent)) 85%, transparent 100%)',
+                }}
+              />
+            </div>
+          </div>
           
           {/* Mobile/Tablet Navigation - Show menu button on screens smaller than xl */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden p-2 text-foreground/70 hover:text-foreground transition-colors flex-shrink-0"
+            className="xl:hidden p-2 text-foreground/70 hover:text-foreground transition-colors flex-shrink-0 self-center xl:self-auto"
           >
             {mobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
           </button>
-          
         </div>
+        
+        {/* Desktop Navigation - Only show on very large screens, below title */}
+        <nav className="hidden xl:flex items-center justify-center px-4 md:px-6 pb-3">
+          <LayoutGroup id="header-nav">
+            <div 
+              ref={navContainerRef}
+              className="relative flex items-center"
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {navItems.map((item, index) => (
+                <div 
+                  key={item.path} 
+                  ref={el => {
+                    if (navRefs.current[index] !== el) {
+                      navRefs.current[index] = el;
+                      // Trigger calculation when ref is set or updated
+                      if (el && mounted) {
+                        requestAnimationFrame(() => {
+                          calculateIndicatorProps();
+                        });
+                      }
+                    }
+                  }}
+                  className="relative flex-shrink-0"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                >
+                  <Link
+                    to={item.path}
+                    className="relative text-xs font-medium uppercase tracking-widest transition-colors duration-150 px-3 xl:px-4 py-2 whitespace-nowrap text-foreground/70 hover:text-foreground inline-block"
+                    style={{
+                      color: activeIndex === index ? '#fff' : undefined
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                </div>
+              ))}
+              
+              {/* Animated indicator */}
+              {activeIndex !== -1 && mounted && width > 0 && (
+                <motion.div
+                  className="absolute bottom-0 h-0.5 bg-amber-400 pointer-events-none z-10"
+                  initial={false}
+                  animate={{
+                    x,
+                    width,
+                    opacity: hoveredIndex !== null ? 0.7 : 1
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 350,
+                    damping: 30
+                  }}
+                />
+              )}
+            </div>
+          </LayoutGroup>
+        </nav>
       </div>
       
       {/* Mobile/Tablet Menu */}
