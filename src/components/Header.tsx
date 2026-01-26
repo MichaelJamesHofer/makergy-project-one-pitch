@@ -10,6 +10,7 @@ const Header = () => {
   const navRefs = React.useRef<(HTMLDivElement | null)[]>([]);
   const [mounted, setMounted] = React.useState(false);
   const [indicatorProps, setIndicatorProps] = React.useState({ x: 0, width: 0 });
+  const retryCountRef = React.useRef(0);
 
   const navItems = [
     { path: '/', label: 'Overview' },
@@ -27,15 +28,20 @@ const Header = () => {
   const calculateIndicatorProps = React.useCallback(() => {
     const currentIndex = hoveredIndex !== null ? hoveredIndex : activeIndex;
     
-    if (currentIndex === -1 || !navRefs.current[currentIndex]) {
+    if (currentIndex === -1) {
       setIndicatorProps({ x: 0, width: 0 });
+      retryCountRef.current = 0;
       return;
     }
     
     // Get the actual element and its computed width
     const currentRef = navRefs.current[currentIndex];
     if (!currentRef) {
-      setIndicatorProps({ x: 0, width: 0 });
+      // If ref not ready, try again (with limit)
+      if (retryCountRef.current < 20) {
+        retryCountRef.current++;
+        setTimeout(() => calculateIndicatorProps(), 50);
+      }
       return;
     }
 
@@ -43,21 +49,34 @@ const Header = () => {
     const currentRect = currentRef.getBoundingClientRect();
     const width = currentRect.width;
     
-    if (width === 0) {
-      // Width not ready yet, don't update
+    if (width === 0 || !isFinite(width)) {
+      // Width not ready yet, try again (with limit)
+      if (retryCountRef.current < 20) {
+        retryCountRef.current++;
+        setTimeout(() => calculateIndicatorProps(), 50);
+      }
       return;
     }
+    
+    // Reset retry count on success
+    retryCountRef.current = 0;
     
     let x = 0;
     for (let i = 0; i < currentIndex; i++) {
       const ref = navRefs.current[i];
       if (ref) {
         const rect = ref.getBoundingClientRect();
-        x += rect.width || 0;
+        const refWidth = rect.width;
+        if (refWidth > 0 && isFinite(refWidth)) {
+          x += refWidth;
+        }
       }
     }
     
-    setIndicatorProps({ x, width });
+    // Only update if we have valid values
+    if (width > 0 && isFinite(width) && x >= 0 && isFinite(x)) {
+      setIndicatorProps({ x, width });
+    }
   }, [hoveredIndex, activeIndex]);
 
   // Update indicator on mount, hover, or active change
@@ -117,32 +136,13 @@ const Header = () => {
 
     let observers: ResizeObserver[] = [];
     let setupTimeout: NodeJS.Timeout;
-    let retryTimeout: NodeJS.Timeout;
 
-    // Wait for fonts and layout to be ready
     const setupObservers = () => {
-      let allRefsReady = true;
-      
-      // Check if all refs are populated and have valid widths
-      navRefs.current.forEach((ref) => {
-        if (!ref || ref.offsetWidth === 0) {
-          allRefsReady = false;
-        }
-      });
-
-      // If refs aren't ready, try again
-      if (!allRefsReady) {
-        retryTimeout = setTimeout(() => {
-          requestAnimationFrame(setupObservers);
-        }, 50);
-        return;
-      }
-
       // Clean up any existing observers
       observers.forEach(observer => observer.disconnect());
       observers = [];
 
-      // Set up observers for all refs
+      // Set up observers for all refs that exist
       navRefs.current.forEach((ref) => {
         if (ref) {
           const observer = new ResizeObserver(() => {
@@ -156,24 +156,22 @@ const Header = () => {
         }
       });
 
-      // Recalculate after observers are set up
+      // Force a recalculation after observers are set up
       requestAnimationFrame(() => {
         calculateIndicatorProps();
-        // Also recalculate after a short delay to catch any late layout changes
-        setTimeout(() => {
-          calculateIndicatorProps();
-        }, 100);
       });
     };
 
-    // Initial setup with delay to ensure DOM is ready
+    // Initial setup - try multiple times to catch all refs
     setupTimeout = setTimeout(() => {
-      requestAnimationFrame(setupObservers);
+      setupObservers();
+      // Also set up again after a delay to catch any late refs
+      setTimeout(setupObservers, 200);
+      setTimeout(setupObservers, 500);
     }, 100);
 
     return () => {
       clearTimeout(setupTimeout);
-      clearTimeout(retryTimeout);
       observers.forEach(observer => observer.disconnect());
     };
   }, [mounted, calculateIndicatorProps]);
@@ -203,7 +201,15 @@ const Header = () => {
                   <div 
                     key={item.path} 
                     ref={el => {
-                      navRefs.current[index] = el;
+                      if (navRefs.current[index] !== el) {
+                        navRefs.current[index] = el;
+                        // Trigger calculation when ref is set or updated
+                        if (el && mounted) {
+                          requestAnimationFrame(() => {
+                            calculateIndicatorProps();
+                          });
+                        }
+                      }
                     }}
                     className="relative flex-shrink-0"
                     onMouseEnter={() => setHoveredIndex(index)}
