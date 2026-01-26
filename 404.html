@@ -8,16 +8,33 @@
       // This script takes the current url and converts the path and query
       // string into just a query string, and then redirects the browser
       // to the new url with only a query string and hash fragment
+      
+      // Prevent infinite redirect loops - check if already redirected
+      var search = window.location.search;
+      var pathname = window.location.pathname;
+      
+      // If search starts with ?/ or pathname has ~and~, we've already redirected
+      if (search.startsWith('?/') || pathname.includes('~and~') || search.includes('~and~')) {
+        // Already redirected, let React Router handle it - don't redirect again
+        // Just load the index.html which will let React Router take over
+        return;
+      }
+      
+      // Only redirect if we're not already at root and there's a path
       var pathSegmentsToKeep = 1;
-
       var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
+      var path = l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/');
+      
+      // Only redirect if there's actually a path to redirect (not root)
+      if (path && path.length > 0 && !path.includes('~and~')) {
+        l.replace(
+          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+          l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+          path.replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+        );
+      }
     </script>
   </head>
   <body>
