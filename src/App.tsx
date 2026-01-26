@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import PasswordProtection from './components/PasswordProtection'
@@ -9,12 +10,25 @@ import ProductsServices from './pages/ProductsServices'
 import FundingRequest from './pages/FundingRequest'
 import DeveloperTermsOffer from './pages/DeveloperTermsOffer'
 import InfrastructureConcepts from './pages/InfrastructureConcepts'
+import posthog from './lib/posthog'
 import './App.css'
+
+// Component to track pageviews
+function PageViewTracker() {
+  const location = useLocation()
+
+  useEffect(() => {
+    posthog.capture('$pageview')
+  }, [location])
+
+  return null
+}
 
 function App() {
   return (
     <Router>
       <PasswordProtection>
+        <PageViewTracker />
         <div className="min-h-screen bg-transparent flex flex-col">
           <Header />
           <main className="flex-grow">
