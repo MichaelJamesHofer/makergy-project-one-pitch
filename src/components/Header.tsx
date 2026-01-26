@@ -53,10 +53,10 @@ const Header = () => {
     const currentRect = currentRef.getBoundingClientRect();
     
     // Calculate x position relative to container
-    const x = currentRect.left - containerRect.left;
+    let x = currentRect.left - containerRect.left;
     const width = currentRect.width;
     
-    if (width === 0 || !isFinite(width) || x < 0 || !isFinite(x)) {
+    if (width === 0 || !isFinite(width) || !isFinite(x)) {
       // Width/position not ready yet, try again (with limit)
       if (retryCountRef.current < 20) {
         retryCountRef.current++;
@@ -68,13 +68,20 @@ const Header = () => {
     // Reset retry count on success
     retryCountRef.current = 0;
     
-    // Ensure x and width are within container bounds
-    const maxX = containerRect.width - width;
+    // Get the actual visible width of the container (accounting for overflow)
+    const containerVisibleWidth = container.offsetWidth || containerRect.width;
+    
+    // Clamp x to ensure indicator stays within visible bounds
+    // If the item is partially or fully outside, clamp it
+    const maxX = Math.max(0, containerVisibleWidth - width);
     const clampedX = Math.max(0, Math.min(x, maxX));
     
+    // Also clamp width if it would overflow
+    const clampedWidth = Math.min(width, containerVisibleWidth - clampedX);
+    
     // Only update if we have valid values
-    if (width > 0 && isFinite(width) && clampedX >= 0 && isFinite(clampedX)) {
-      setIndicatorProps({ x: clampedX, width });
+    if (clampedWidth > 0 && isFinite(clampedWidth) && clampedX >= 0 && isFinite(clampedX)) {
+      setIndicatorProps({ x: clampedX, width: clampedWidth });
     }
   }, [hoveredIndex, activeIndex]);
 
@@ -190,12 +197,13 @@ const Header = () => {
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center flex-1 justify-end min-w-0">
+          <nav className="hidden lg:flex items-center flex-1 justify-end min-w-0 overflow-hidden">
             <LayoutGroup id="header-nav">
               <div 
                 ref={navContainerRef}
                 className="relative flex items-center max-w-full"
                 onMouseLeave={() => setHoveredIndex(null)}
+                style={{ maxWidth: '100%' }}
               >
                 {navItems.map((item, index) => (
                   <div 
