@@ -8,6 +8,7 @@ import FinancialProjections from './pages/FinancialProjections'
 import ProductsServices from './pages/ProductsServices'
 import FundingRequest from './pages/FundingRequest'
 import DeveloperTermsOffer from './pages/DeveloperTermsOffer'
+import InfrastructureConcepts from './pages/InfrastructureConcepts'
 import './App.css'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path="/products-services" element={<ProductsServices />} />
               <Route path="/funding-request" element={<FundingRequest />} />
               <Route path="/developer-terms" element={<DeveloperTermsOffer />} />
+              <Route path="/community-design-guide" element={<InfrastructureConcepts />} />
             </Routes>
           </main>
           <Footer />

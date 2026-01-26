@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FiDollarSign, FiFileText, FiTarget } from 'react-icons/fi';
 import { IoRocketOutline } from 'react-icons/io5';
 import { BiBookOpen } from 'react-icons/bi';
+import { FiMapPin } from 'react-icons/fi';
 
 const HomePage = () => {
   type Section = {
@@ -42,6 +43,13 @@ const HomePage = () => {
       description: 'All-cash equity, SPV structure, 100% residual to Makergy',
       link: '/funding-request',
       color: 'from-yellow-500 to-orange-500'
+    },
+    {
+      icon: <FiMapPin className="w-8 h-8" />,
+      title: 'Community Design Guide',
+      description: 'Entry, landscape, and infrastructure elements that justify premium lot pricing',
+      link: '/community-design-guide',
+      color: 'from-stone-500 to-amber-400'
     },
     {
       icon: <FiFileText className="w-8 h-8" />,

@@ -9,41 +9,95 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const navRefs = React.useRef<(HTMLDivElement | null)[]>([]);
   const [mounted, setMounted] = React.useState(false);
+  const [indicatorProps, setIndicatorProps] = React.useState({ x: 0, width: 0 });
 
   const navItems = [
     { path: '/', label: 'Overview' },
     { path: '/executive-summary', label: 'Project Summary' },
     { path: '/financial-projections', label: 'Budget & Returns' },
     { path: '/products-services', label: 'Design & Scope' },
+    { path: '/community-design-guide', label: 'Community Design Guide' },
     { path: '/funding-request', label: 'Investment Terms' },
     { path: '/developer-terms', label: 'Developer Terms' },
   ];
 
   const activeIndex = navItems.findIndex(item => item.path === location.pathname);
 
-  // Force re-render after refs are populated
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
   // Calculate position and width for the indicator
-  const currentIndex = hoveredIndex !== null ? hoveredIndex : activeIndex;
-  
-  const getIndicatorProps = () => {
+  const calculateIndicatorProps = React.useCallback(() => {
+    const currentIndex = hoveredIndex !== null ? hoveredIndex : activeIndex;
+    
     if (currentIndex === -1 || !navRefs.current[currentIndex]) {
-      return { x: 0, width: 0 };
+      setIndicatorProps({ x: 0, width: 0 });
+      return;
     }
     
     let x = 0;
     for (let i = 0; i < currentIndex; i++) {
-      x += navRefs.current[i]?.offsetWidth || 0;
+      const ref = navRefs.current[i];
+      if (ref) {
+        x += ref.offsetWidth || 0;
+      }
     }
     
     const width = navRefs.current[currentIndex]?.offsetWidth || 0;
-    return { x, width };
-  };
+    setIndicatorProps({ x, width });
+  }, [hoveredIndex, activeIndex]);
 
-  const { x, width } = getIndicatorProps();
+  // Update indicator on mount, hover, or active change
+  React.useEffect(() => {
+    calculateIndicatorProps();
+  }, [calculateIndicatorProps]);
+
+  // Handle window resize and use ResizeObserver for accurate width detection
+  React.useEffect(() => {
+    setMounted(true);
+    
+    // Initial calculation after a brief delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      calculateIndicatorProps();
+    }, 100);
+
+    // Window resize handler
+    const handleResize = () => {
+      calculateIndicatorProps();
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [calculateIndicatorProps]);
+
+  // Set up ResizeObserver for each nav item after refs are populated
+  React.useEffect(() => {
+    if (!mounted) return;
+
+    const observers: ResizeObserver[] = [];
+    
+    // Set up observers for all refs
+    navRefs.current.forEach((ref) => {
+      if (ref) {
+        const observer = new ResizeObserver(() => {
+          calculateIndicatorProps();
+        });
+        observer.observe(ref);
+        observers.push(observer);
+      }
+    });
+
+    // Also recalculate after observers are set up
+    setTimeout(() => {
+      calculateIndicatorProps();
+    }, 50);
+
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, [mounted, calculateIndicatorProps]);
+
+  const { x, width } = indicatorProps;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75 border-border">
@@ -58,22 +112,24 @@ const Header = () => {
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center">
+          <nav className="hidden lg:flex items-center flex-1 justify-end min-w-0">
             <LayoutGroup id="header-nav">
               <div 
-                className="relative flex items-center"
+                className="relative flex items-center max-w-full"
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 {navItems.map((item, index) => (
                   <div 
                     key={item.path} 
-                    ref={el => navRefs.current[index] = el}
-                    className="relative"
+                    ref={el => {
+                      navRefs.current[index] = el;
+                    }}
+                    className="relative flex-shrink-0"
                     onMouseEnter={() => setHoveredIndex(index)}
                   >
                     <Link
                       to={item.path}
-                      className="relative text-xs font-medium uppercase tracking-widest transition-colors duration-150 px-4 py-2 whitespace-nowrap text-foreground/70 hover:text-foreground inline-block"
+                      className="relative text-xs font-medium uppercase tracking-widest transition-colors duration-150 px-3 xl:px-4 py-2 whitespace-nowrap text-foreground/70 hover:text-foreground inline-block"
                       style={{
                         color: activeIndex === index ? '#fff' : undefined
                       }}
@@ -84,9 +140,9 @@ const Header = () => {
                 ))}
                 
                 {/* Animated indicator */}
-                {currentIndex !== -1 && mounted && (
+                {activeIndex !== -1 && mounted && width > 0 && (
                   <motion.div
-                    className="absolute bottom-0 h-0.5 bg-amber-400 pointer-events-none"
+                    className="absolute bottom-0 h-0.5 bg-amber-400 pointer-events-none z-10"
                     initial={false}
                     animate={{
                       x,
@@ -104,23 +160,24 @@ const Header = () => {
             </LayoutGroup>
           </nav>
           
-          {/* Mobile Menu Button */}
+          {/* Tablet Navigation - Show menu button earlier */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-foreground/70 hover:text-foreground transition-colors flex-shrink-0"
+            className="lg:hidden p-2 text-foreground/70 hover:text-foreground transition-colors flex-shrink-0"
           >
             {mobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
           </button>
+          
         </div>
       </div>
       
-      {/* Mobile Menu */}
+      {/* Mobile/Tablet Menu */}
       {mobileMenuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden bg-background border-t border-border"
+          className="lg:hidden bg-background border-t border-border"
         >
           <div className="container py-4">
             <nav className="flex flex-col space-y-2">
