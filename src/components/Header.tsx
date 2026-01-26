@@ -8,6 +8,7 @@ const Header = () => {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const navRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+  const navContainerRef = React.useRef<HTMLDivElement | null>(null);
   const [mounted, setMounted] = React.useState(false);
   const [indicatorProps, setIndicatorProps] = React.useState({ x: 0, width: 0 });
   const retryCountRef = React.useRef(0);
@@ -34,10 +35,12 @@ const Header = () => {
       return;
     }
     
-    // Get the actual element and its computed width
+    // Get the container and current element
+    const container = navContainerRef.current;
     const currentRef = navRefs.current[currentIndex];
-    if (!currentRef) {
-      // If ref not ready, try again (with limit)
+    
+    if (!container || !currentRef) {
+      // If refs not ready, try again (with limit)
       if (retryCountRef.current < 20) {
         retryCountRef.current++;
         setTimeout(() => calculateIndicatorProps(), 50);
@@ -45,12 +48,16 @@ const Header = () => {
       return;
     }
 
-    // Use getBoundingClientRect for more accurate measurements
+    // Get container position for relative calculations
+    const containerRect = container.getBoundingClientRect();
     const currentRect = currentRef.getBoundingClientRect();
+    
+    // Calculate x position relative to container
+    const x = currentRect.left - containerRect.left;
     const width = currentRect.width;
     
-    if (width === 0 || !isFinite(width)) {
-      // Width not ready yet, try again (with limit)
+    if (width === 0 || !isFinite(width) || x < 0 || !isFinite(x)) {
+      // Width/position not ready yet, try again (with limit)
       if (retryCountRef.current < 20) {
         retryCountRef.current++;
         setTimeout(() => calculateIndicatorProps(), 50);
@@ -61,21 +68,13 @@ const Header = () => {
     // Reset retry count on success
     retryCountRef.current = 0;
     
-    let x = 0;
-    for (let i = 0; i < currentIndex; i++) {
-      const ref = navRefs.current[i];
-      if (ref) {
-        const rect = ref.getBoundingClientRect();
-        const refWidth = rect.width;
-        if (refWidth > 0 && isFinite(refWidth)) {
-          x += refWidth;
-        }
-      }
-    }
+    // Ensure x and width are within container bounds
+    const maxX = containerRect.width - width;
+    const clampedX = Math.max(0, Math.min(x, maxX));
     
     // Only update if we have valid values
-    if (width > 0 && isFinite(width) && x >= 0 && isFinite(x)) {
-      setIndicatorProps({ x, width });
+    if (width > 0 && isFinite(width) && clampedX >= 0 && isFinite(clampedX)) {
+      setIndicatorProps({ x: clampedX, width });
     }
   }, [hoveredIndex, activeIndex]);
 
@@ -194,6 +193,7 @@ const Header = () => {
           <nav className="hidden lg:flex items-center flex-1 justify-end min-w-0">
             <LayoutGroup id="header-nav">
               <div 
+                ref={navContainerRef}
                 className="relative flex items-center max-w-full"
                 onMouseLeave={() => setHoveredIndex(null)}
               >
