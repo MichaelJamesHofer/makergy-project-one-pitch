@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -12,6 +12,29 @@ import DeveloperTermsOffer from './pages/DeveloperTermsOffer'
 import InfrastructureConcepts from './pages/InfrastructureConcepts'
 import posthog from './lib/posthog'
 import './App.css'
+
+// Component to handle GitHub Pages SPA redirect format
+function RedirectHandler() {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    // Check if URL has the GitHub Pages SPA redirect format: /?/path
+    const search = window.location.search
+    if (search.startsWith('?/')) {
+      // Extract the path from the query parameter
+      const path = search.slice(2).replace(/~and~/g, '&')
+      // Clean up the URL by navigating to the actual path
+      if (path) {
+        navigate(path, { replace: true })
+      } else {
+        navigate('/', { replace: true })
+      }
+    }
+  }, [navigate])
+
+  return null
+}
 
 // Component to track pageviews
 function PageViewTracker() {
@@ -28,6 +51,7 @@ function App() {
   return (
     <Router>
       <PasswordProtection>
+        <RedirectHandler />
         <PageViewTracker />
         <div className="min-h-screen bg-transparent flex flex-col">
           <Header />
