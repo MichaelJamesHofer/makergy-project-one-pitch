@@ -150,4 +150,13 @@
   .border-stone-700 {
     border-color: hsl(var(--border));
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

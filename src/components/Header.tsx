@@ -196,14 +196,13 @@ const Header = () => {
             </h1>
           </div>
           
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center flex-1 justify-end min-w-0 overflow-hidden">
+          {/* Desktop Navigation - Only show on very large screens */}
+          <nav className="hidden xl:flex items-center flex-1 justify-end min-w-0">
             <LayoutGroup id="header-nav">
               <div 
                 ref={navContainerRef}
-                className="relative flex items-center max-w-full"
+                className="relative flex items-center"
                 onMouseLeave={() => setHoveredIndex(null)}
-                style={{ maxWidth: '100%' }}
               >
                 {navItems.map((item, index) => (
                   <div 
@@ -255,10 +254,10 @@ const Header = () => {
             </LayoutGroup>
           </nav>
           
-          {/* Tablet Navigation - Show menu button earlier */}
+          {/* Mobile/Tablet Navigation - Show menu button on screens smaller than xl */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-foreground/70 hover:text-foreground transition-colors flex-shrink-0"
+            className="xl:hidden p-2 text-foreground/70 hover:text-foreground transition-colors flex-shrink-0"
           >
             {mobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
           </button>
@@ -272,7 +271,7 @@ const Header = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="lg:hidden bg-background border-t border-border"
+          className="xl:hidden bg-background border-t border-border"
         >
           <div className="container py-4">
             <nav className="flex flex-col space-y-2">
